@@ -3,3 +3,15 @@
 mono/
 *.tmp
 *.log
+*.converted.*
+*.translation
+export.cfg
+export_presets.cfg
+*.pck
+*.exe
+*.apk
+*.zip
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
