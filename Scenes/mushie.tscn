@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://dtkqthu3qvgif"]
+
+[ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
+[ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scenes/mushie.gd" id="1_448ka"]
+[ext_resource type="Texture2D" uid="uid://cw0e7w2q7ogps" path="res://Assets/Mushie/IdleRight2.png" id="2_678c6"]
+[ext_resource type="Texture2D" uid="uid://cgs6c00d70y5b" path="res://Assets/Mushie/WalkRight1.png" id="3_448ka"]
+[ext_resource type="Texture2D" uid="uid://sng515waucud" path="res://Assets/Mushie/WalkRight2.png" id="4_jwnhi"]
+[ext_resource type="Texture2D" uid="uid://ct0qpyfjo42en" path="res://Assets/Mushie/WalkRight3.png" id="5_l8eyo"]
+[ext_resource type="Texture2D" uid="uid://bxb1mqk7kgngr" path="res://Assets/Mushie/ShootinHand.png" id="6_678c6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5qxbh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_26utk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_678c6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_448ka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jwnhi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_l8eyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jwnhi")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26utk"]
+radius = 36.0
+height = 112.0
+
+[node name="Mushie" type="CharacterBody2D"]
+script = ExtResource("1_448ka")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4, 0)
+sprite_frames = SubResource("SpriteFrames_5qxbh")
+animation = &"walk"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_26utk")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="HandSprite" type="Sprite2D" parent="Marker2D"]
+position = Vector2(50, 0)
+rotation = -6.28319
+texture = ExtResource("6_678c6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
