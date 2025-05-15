@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://byuu2gpii7xu3"]
 
-[ext_resource type="Texture2D" uid="uid://bxa151mk34b8u" path="res://assets/Tilesets/sample_growth_tile.png" id="1_go701"]
-[ext_resource type="PackedScene" uid="uid://dtkqthu3qvgif" path="res://scenes/mushie.tscn" id="2_5a7ea"]
+[ext_resource type="Texture2D" uid="uid://bxa151mk34b8u" path="res://Assets/Tilesets/sample_growth_tile.png" id="1_go701"]
+[ext_resource type="PackedScene" uid="uid://dtkqthu3qvgif" path="res://Scenes/mushie.tscn" id="2_5a7ea"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7yv"]
 texture = ExtResource("1_go701")

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxb1mqk7kgngr"
-path="res://.godot/imported/ShootinHand.png-3f5d4966e00478800f6217026d55b4b9.ctex"
+path="res://.godot/imported/ShootinHand.png-1dc6c1046760707fa68538ae453808d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Mushie/ShootinHand.png"
-dest_files=["res://.godot/imported/ShootinHand.png-3f5d4966e00478800f6217026d55b4b9.ctex"]
+source_file="res://Assets/Mushie/ShootinHand.png"
+dest_files=["res://.godot/imported/ShootinHand.png-1dc6c1046760707fa68538ae453808d0.ctex"]
 
 [params]
 

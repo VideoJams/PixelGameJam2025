@@ -12,6 +12,7 @@ func _handle_input(delta: float) -> void:
 	var inputVector = Vector2.ZERO
 	inputVector.x = Input.get_axis("left", "right")
 	inputVector.y = Input.get_axis("up", "down")
+	if inputVector.length() > 0: inputVector = inputVector.normalized()
 	velocity = inputVector * moveSpeed
 
 func _handle_animation():

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxa151mk34b8u"
-path="res://.godot/imported/sample_growth_tile.png-245cdf5498cde1eaf1b7f5769b73967c.ctex"
+path="res://.godot/imported/sample_growth_tile.png-0f67ef432c742892fee3e3db96f6ec88.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tilesets/sample_growth_tile.png"
-dest_files=["res://.godot/imported/sample_growth_tile.png-245cdf5498cde1eaf1b7f5769b73967c.ctex"]
+source_file="res://Assets/Tilesets/sample_growth_tile.png"
+dest_files=["res://.godot/imported/sample_growth_tile.png-0f67ef432c742892fee3e3db96f6ec88.ctex"]
 
 [params]
 
