@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtko6384rldnc"
-path="res://.godot/imported/dog smoking a cigarette.png-1fc775d31a76f176fa18e90891b355bf.ctex"
+path="res://.godot/imported/dog smoking a cigarette.png-f7d30eeba2d4f4db1c6eb9fabfa07587.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/dog smoking a cigarette.png"
-dest_files=["res://.godot/imported/dog smoking a cigarette.png-1fc775d31a76f176fa18e90891b355bf.ctex"]
+source_file="res://assets/dog smoking a cigarette.png"
+dest_files=["res://.godot/imported/dog smoking a cigarette.png-f7d30eeba2d4f4db1c6eb9fabfa07587.ctex"]
 
 [params]
 

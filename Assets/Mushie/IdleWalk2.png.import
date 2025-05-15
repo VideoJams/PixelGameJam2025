@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sskykvy2842e"
-path="res://.godot/imported/IdleWalk2.png-e34ef9c3304f71749786c3bc7afdd50d.ctex"
+path="res://.godot/imported/IdleWalk2.png-113f4587de75c0a306edf03fa6bb0579.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Mushie/IdleWalk2.png"
-dest_files=["res://.godot/imported/IdleWalk2.png-e34ef9c3304f71749786c3bc7afdd50d.ctex"]
+source_file="res://assets/Mushie/IdleWalk2.png"
+dest_files=["res://.godot/imported/IdleWalk2.png-113f4587de75c0a306edf03fa6bb0579.ctex"]
 
 [params]
 
