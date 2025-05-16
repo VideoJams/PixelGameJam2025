@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://wt4yof7mqoyk"]
+
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_7658v"]
+[ext_resource type="Script" uid="uid://dld2tlivxdduc" path="res://Scripts/floater.gd" id="2_qt4hv"]
+[ext_resource type="Texture2D" uid="uid://cei03f8ioymlt" path="res://Assets/Enemies/Floater/FloatyMove1.png" id="3_xqj1n"]
+[ext_resource type="Texture2D" uid="uid://dmuqwe4ci3vxo" path="res://Assets/Enemies/Floater/FloatyMove2.png" id="4_pd32t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p8xcf"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("3_xqj1n")
+}, {
+"duration": 2.0,
+"texture": ExtResource("4_pd32t")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5kk1j"]
+radius = 55.0
+height = 140.0
+
+[node name="Floater" instance=ExtResource("1_7658v")]
+script = ExtResource("2_qt4hv")
+hit_points = 50
+move_speed = 100
+attack_damage = 69
+growth_on_death = 10
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_p8xcf")
+animation = &"move"
+autoplay = "move"
+frame_progress = 0.276776
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CapsuleShape2D_5kk1j")

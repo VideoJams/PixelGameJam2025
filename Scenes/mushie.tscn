@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://dtkqthu3qvgif"]
 
-[ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://assets/Mushie/IdleRight1.png" id="1_26utk"]
-[ext_resource type="Script" uid="uid://djenrccur4yw" path="res://scenes/mushie.gd" id="1_448ka"]
-[ext_resource type="Texture2D" uid="uid://cw0e7w2q7ogps" path="res://assets/Mushie/IdleRight2.png" id="2_678c6"]
-[ext_resource type="Texture2D" uid="uid://cgs6c00d70y5b" path="res://assets/Mushie/WalkRight1.png" id="3_448ka"]
-[ext_resource type="Texture2D" uid="uid://sng515waucud" path="res://assets/Mushie/WalkRight2.png" id="4_jwnhi"]
-[ext_resource type="Texture2D" uid="uid://ct0qpyfjo42en" path="res://assets/Mushie/WalkRight3.png" id="5_l8eyo"]
-[ext_resource type="Texture2D" uid="uid://bxb1mqk7kgngr" path="res://assets/Mushie/ShootinHand.png" id="6_678c6"]
+[ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
+[ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scripts/mushie.gd" id="1_448ka"]
+[ext_resource type="Texture2D" uid="uid://cw0e7w2q7ogps" path="res://Assets/Mushie/IdleRight2.png" id="2_678c6"]
+[ext_resource type="Texture2D" uid="uid://cgs6c00d70y5b" path="res://Assets/Mushie/WalkRight1.png" id="3_448ka"]
+[ext_resource type="Texture2D" uid="uid://sng515waucud" path="res://Assets/Mushie/WalkRight2.png" id="4_jwnhi"]
+[ext_resource type="Texture2D" uid="uid://ct0qpyfjo42en" path="res://Assets/Mushie/WalkRight3.png" id="5_l8eyo"]
+[ext_resource type="Texture2D" uid="uid://bxb1mqk7kgngr" path="res://Assets/Mushie/ShootinHand.png" id="6_678c6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5qxbh"]
 animations = [{
