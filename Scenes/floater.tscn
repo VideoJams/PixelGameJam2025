@@ -1,12 +1,38 @@
-[gd_scene load_steps=7 format=3 uid="uid://wt4yof7mqoyk"]
+[gd_scene load_steps=13 format=3 uid="uid://wt4yof7mqoyk"]
 
 [ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_7658v"]
 [ext_resource type="Script" uid="uid://dld2tlivxdduc" path="res://Scripts/floater.gd" id="2_qt4hv"]
+[ext_resource type="Texture2D" uid="uid://djnjuftevggih" path="res://Assets/Enemies/Shooter/ShooterDeath1.png" id="3_bxlf7"]
 [ext_resource type="Texture2D" uid="uid://cei03f8ioymlt" path="res://Assets/Enemies/Floater/FloatyMove1.png" id="3_xqj1n"]
+[ext_resource type="Texture2D" uid="uid://byiu3408dqmkd" path="res://Assets/Enemies/Shooter/ShooterDeath2.png" id="4_l8orq"]
 [ext_resource type="Texture2D" uid="uid://dmuqwe4ci3vxo" path="res://Assets/Enemies/Floater/FloatyMove2.png" id="4_pd32t"]
+[ext_resource type="Texture2D" uid="uid://bfpuyfdrqkrto" path="res://Assets/Enemies/Shooter/ShooterDeath3.png" id="5_3c8bm"]
+[ext_resource type="Texture2D" uid="uid://c011h68cgx552" path="res://Assets/Enemies/Floater/FloatyDamage.png" id="5_xqj1n"]
+[ext_resource type="Texture2D" uid="uid://bkonmysfp7nx1" path="res://Assets/Enemies/Shooter/ShooterDeath4.png" id="6_nn38f"]
+[ext_resource type="Texture2D" uid="uid://b1bm3cff436ex" path="res://Assets/Enemies/Shooter/ShooterDeath5.png" id="7_6g4rh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p8xcf"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bxlf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_l8orq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3c8bm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nn38f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6g4rh")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 2.0,
 "texture": ExtResource("3_xqj1n")
@@ -17,6 +43,14 @@ animations = [{
 "loop": true,
 "name": &"move",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xqj1n")
+}],
+"loop": true,
+"name": &"take_damage",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5kk1j"]
@@ -25,16 +59,15 @@ height = 140.0
 
 [node name="Floater" instance=ExtResource("1_7658v")]
 script = ExtResource("2_qt4hv")
-hit_points = 50
-move_speed = 100
-attack_damage = 69
-growth_on_death = 10
+hit_points = 50.0
+move_speed = 100.0
+attack_damage = 20.0
+growth_on_death = 5
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_p8xcf")
-animation = &"move"
+animation = &"death"
 autoplay = "move"
-frame_progress = 0.276776
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CapsuleShape2D_5kk1j")

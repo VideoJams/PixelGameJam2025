@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var tilemap: TileMapLayer = $TileMapLayer
 
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("click"):
 		var mouse_global_pos = get_global_mouse_position()
