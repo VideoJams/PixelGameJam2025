@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 @onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
-
+@onready var points_UI = $Control/Points
+var points = 0
 @export var moveSpeed = 200.0
 @export var health = 50.0
 @export var damage = 10.0
@@ -42,6 +43,11 @@ func _handle_animation():
 		$AnimatedSprite2D.play("idle", 1)
 	$AnimatedSprite2D.flip_h = get_global_mouse_position().x < global_position.x
 	$HandSprite.look_at(get_global_mouse_position())
+
+func gain_point():
+	points += 1
+	$Control/Points.text = "Points: %d" % points
+	print(points)
 
 func take_damage(damage: float):
 	health -= damage

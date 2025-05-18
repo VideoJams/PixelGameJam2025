@@ -104,7 +104,9 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 			add_child(new_tree)
 			new_tree.global_position = tilemap.to_global(tilemap.map_to_local(cell))
 			new_tree.z_index = int(global_position.y)
-			
+			mushie.gain_point()
+			print("point gain")
+		
 		var new_atlas_coords: Vector2i = Vector2i(new_linear_index, 0)
 		tilemap.set_cell(cell, source_id, new_atlas_coords)
 	
