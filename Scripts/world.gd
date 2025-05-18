@@ -96,6 +96,7 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 	
 	if current_linear_index < 4:
 		var new_linear_index: int = current_linear_index + growth_increase
+		mushie.add_growth_quota(growth_increase)
 		
 		# At 4 (cap at 4), spawn tree
 		if new_linear_index >= 4:

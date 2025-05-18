@@ -3,6 +3,10 @@ extends CharacterBody2D
 @onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
 @onready var points_UI = $Control/Points
 var points = 0
+var display_growth = 0
+var total_growth = 0
+var quota = 30
+var next_quota = 40
 @export var moveSpeed = 200.0
 @export var health = 50.0
 @export var damage = 10.0
@@ -43,6 +47,15 @@ func _handle_animation():
 		$AnimatedSprite2D.play("idle", 1)
 	$AnimatedSprite2D.flip_h = get_global_mouse_position().x < global_position.x
 	$HandSprite.look_at(get_global_mouse_position())
+
+func add_growth_quota(growth):
+	display_growth += growth
+	total_growth += growth
+	if display_growth >= quota:
+		display_growth = 0
+		quota = next_quota
+		next_quota += 10
+	$Control/Quota.text = "Quota: %d/%d" % [display_growth, quota]
 
 func gain_point():
 	points += 1
