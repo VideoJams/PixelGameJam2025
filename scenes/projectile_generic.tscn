@@ -1,16 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://cpg2dgrdh07fg"]
 
-[ext_resource type="Script" uid="uid://dmh4gfqatsok1" path="res://Scripts/pellet.gd" id="1_3383t"]
-[ext_resource type="Texture2D" uid="uid://bwvldlonqcxn8" path="res://Assets/Very Important/icon.svg" id="2_w8cbf"]
+[ext_resource type="Script" uid="uid://dmh4gfqatsok1" path="res://Scripts/projectile_generic.gd" id="1_28f15"]
+[ext_resource type="Texture2D" uid="uid://bwvldlonqcxn8" path="res://Assets/Very Important/icon.svg" id="2_lemnc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehlla"]
 
-[node name="pellet" type="Area2D"]
-script = ExtResource("1_3383t")
+[node name="projectile_generic" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_28f15")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_w8cbf")
+texture = ExtResource("2_lemnc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ehlla")

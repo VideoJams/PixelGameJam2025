@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://wt4yof7mqoyk"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_7658v"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_7658v"]
 [ext_resource type="Script" uid="uid://dld2tlivxdduc" path="res://Scripts/floater.gd" id="2_qt4hv"]
 [ext_resource type="Texture2D" uid="uid://djnjuftevggih" path="res://Assets/Enemies/Shooter/ShooterDeath1.png" id="3_bxlf7"]
 [ext_resource type="Texture2D" uid="uid://cei03f8ioymlt" path="res://Assets/Enemies/Floater/FloatyMove1.png" id="3_xqj1n"]
@@ -62,7 +62,7 @@ script = ExtResource("2_qt4hv")
 hit_points = 50.0
 move_speed = 100.0
 attack_damage = 20.0
-growth_on_death = 5
+growth_on_death = 2
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_p8xcf")

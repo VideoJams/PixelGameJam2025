@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var pellet_scene: PackedScene = preload("res://Scenes/pellet.tscn")
+@onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
 
 @export var moveSpeed = 200.0
 @export var health = 250.0
@@ -24,13 +24,18 @@ func _handle_input(delta: float):
 		pellet_instance.global_position = $HandSprite/Marker2D.global_position
 		pellet_instance.target_position = get_global_mouse_position()
 		pellet_instance.damage = damage
+		pellet_instance.move_speed = 300.0
+		pellet_instance.configure_as_player_projectile()
 		get_tree().current_scene.add_child(pellet_instance)
 
 
 func _handle_animation():
 	if velocity.length() > 0:
-		$AnimatedSprite2D.play("walk")
+		$AnimatedSprite2D.play("walk", 2)
 	else:
-		$AnimatedSprite2D.play("idle")
+		$AnimatedSprite2D.play("idle", 1)
 	$AnimatedSprite2D.flip_h = get_global_mouse_position().x < global_position.x
 	$HandSprite.look_at(get_global_mouse_position())
+
+func take_damage(damage: float):
+	health -= damage

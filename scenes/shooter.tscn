@@ -1,0 +1,141 @@
+[gd_scene load_steps=25 format=3 uid="uid://d1s3njvakry6p"]
+
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_mger4"]
+[ext_resource type="Script" uid="uid://b2yrq0sx47h8g" path="res://shooter.gd" id="2_ok5ye"]
+[ext_resource type="Texture2D" uid="uid://c5aygi4lahn2n" path="res://Assets/Enemies/Shooter/ShooterIdle1.png" id="3_ld1l8"]
+[ext_resource type="Texture2D" uid="uid://c5dnju7jqkh0l" path="res://Assets/Enemies/Shooter/ShooterFire1.png" id="3_suw1a"]
+[ext_resource type="Texture2D" uid="uid://pxtc580y6xfl" path="res://Assets/Enemies/Shooter/ShooterCharge1.png" id="3_xxh7r"]
+[ext_resource type="Texture2D" uid="uid://bdpjvl1n6we7o" path="res://Assets/Enemies/Shooter/ShooterFire2.png" id="4_a2wj4"]
+[ext_resource type="Texture2D" uid="uid://fa0srrgee48b" path="res://Assets/Enemies/Shooter/ShooterCharge2.png" id="4_ts0hh"]
+[ext_resource type="Texture2D" uid="uid://bm6ertde322pt" path="res://Assets/Enemies/Shooter/ShooterIdle2.png" id="4_xxh7r"]
+[ext_resource type="Texture2D" uid="uid://bye6tew04xqo1" path="res://Assets/Enemies/Shooter/ShooterFire3.png" id="5_jfxtt"]
+[ext_resource type="Texture2D" uid="uid://cn1pfp7y6jfkg" path="res://Assets/Enemies/Shooter/ShooterCharge3.png" id="5_qut8p"]
+[ext_resource type="Texture2D" uid="uid://d2wvngdymlfdk" path="res://Assets/Enemies/Shooter/ShooterFire4.png" id="6_iolix"]
+[ext_resource type="Texture2D" uid="uid://cha6btfc2wtk0" path="res://Assets/Enemies/Shooter/ShooterDamaged.png" id="6_ts0hh"]
+[ext_resource type="Texture2D" uid="uid://djnjuftevggih" path="res://Assets/Enemies/Shooter/ShooterDeath1.png" id="7_cgnek"]
+[ext_resource type="Texture2D" uid="uid://byiu3408dqmkd" path="res://Assets/Enemies/Shooter/ShooterDeath2.png" id="8_6yn3d"]
+[ext_resource type="Texture2D" uid="uid://bfpuyfdrqkrto" path="res://Assets/Enemies/Shooter/ShooterDeath3.png" id="9_gpxed"]
+[ext_resource type="Texture2D" uid="uid://bkonmysfp7nx1" path="res://Assets/Enemies/Shooter/ShooterDeath4.png" id="10_s8vns"]
+[ext_resource type="Texture2D" uid="uid://b1bm3cff436ex" path="res://Assets/Enemies/Shooter/ShooterDeath5.png" id="11_suw1a"]
+[ext_resource type="Texture2D" uid="uid://uvaur0uj7p35" path="res://Assets/Enemies/Shooter/ShooterSpawn.png" id="17_fvoti"]
+[ext_resource type="Texture2D" uid="uid://2wodkkcfw1c" path="res://Assets/Enemies/Shooter/ShooterSpawn2.png" id="18_s1oq1"]
+[ext_resource type="Texture2D" uid="uid://cns4xvk1nwxu2" path="res://Assets/Enemies/Shooter/ShooterSpawn3.png" id="19_65dik"]
+[ext_resource type="Texture2D" uid="uid://bdp7ibf7q6ynj" path="res://Assets/Enemies/Shooter/ShooterSpawn4.png" id="20_snegt"]
+[ext_resource type="Texture2D" uid="uid://h2v25bbqo58a" path="res://Assets/Enemies/Shooter/ShooterSpawn5.png" id="21_rl5hn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ts0hh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_suw1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a2wj4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jfxtt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_iolix")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xxh7r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ts0hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qut8p")
+}],
+"loop": false,
+"name": &"charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_cgnek")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_6yn3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gpxed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_s8vns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_suw1a")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ld1l8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xxh7r")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_fvoti")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_s1oq1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_65dik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_snegt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_rl5hn")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ts0hh")
+}],
+"loop": false,
+"name": &"take_damage",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fvoti"]
+radius = 59.0
+height = 188.0
+
+[node name="Shooter" instance=ExtResource("1_mger4")]
+script = ExtResource("2_ok5ye")
+hit_points = 40.0
+move_speed = 100.0
+attack_damage = 10.0
+growth_on_death = 2
+has_ranged_attack = true
+attack_range = 1000.0
+attack_cooldown = 3.0
+attack_releases_on_frame = 2
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_ts0hh")
+animation = &"move"
+autoplay = "move"
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(16, 4)
+shape = SubResource("CapsuleShape2D_fvoti")

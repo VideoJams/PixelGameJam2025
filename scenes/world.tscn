@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=4 uid="uid://byuu2gpii7xu3"]
+[gd_scene load_steps=6 format=3 uid="uid://byuu2gpii7xu3"]
 
 [ext_resource type="Script" uid="uid://ceef1jn4w2gnv" path="res://Scripts/world.gd" id="1_5a7ea"]
 [ext_resource type="Texture2D" uid="uid://bxa151mk34b8u" path="res://Assets/Tilesets/sample_growth_tile.png" id="1_go701"]
-[ext_resource type="PackedScene" uid="uid://dtkqthu3qvgif" path="res://Scenes/mushie.tscn" id="2_5a7ea"]
-[ext_resource type="PackedScene" uid="uid://wt4yof7mqoyk" path="res://Scenes/floater.tscn" id="4_8j60k"]
+[ext_resource type="PackedScene" uid="uid://dtkqthu3qvgif" path="res://scenes/mushie.tscn" id="2_5a7ea"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fj7yv"]
 texture = ExtResource("1_go701")
@@ -182,14 +181,12 @@ script = ExtResource("1_5a7ea")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
 position = Vector2(27, -14)
-tile_map_data = PackedByteArray("AAD8//z/AAAAAAAAAAD9//z/AAAAAAAAAAD+//z/AAAAAAAAAAD8//3/AAAAAAAAAAD9//3/AAAAAAAAAAD+//3/AAAAAAAAAAD///3/AAAAAAAAAAD///z/AAAAAAAAAAAAAPz/AAAAAAAAAAAAAP3/AAAAAAAAAAACAP3/AAAAAAAAAAD8////AAABAAAAAAD8/wAAAAACAAAAAAD8/wEAAAADAAAAAAD9/wEAAAABAAEAAAD+/wEAAAABAAAAAAD//wEAAAAAAAAAAAABAAEAAAACAAEAAAACAAEAAAADAAEAAAACAAAAAAADAAEAAAACAP//AAADAAMAAAD9////AAABAAAAAAD+////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAADAAMAAAD8//7/AAAAAAAAAAD9//7/AAAAAAAAAAD+//7/AAAAAAAAAAD///7/AAAAAAAAAAABAP7/AAADAAMAAAACAP7/AAADAAMAAAABAAAAAAADAAEAAAAAAAAAAAADAAEAAAD//wAAAAAAAAAAAAD+/wAAAAABAAAAAAD9/wAAAAAAAAEAAAD7//z/AAAAAAAAAAD7//3/AAAAAAAAAAD7//7/AAAAAAAAAAD7////AAAAAAAAAAD7/wAAAAABAAAAAAD7/wEAAAABAAAAAAD7/wIAAAAAAAAAAAD8/wIAAAABAAAAAAD9/wIAAAABAAAAAAD+/wIAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAIAAAADAAEAAAACAAIAAAADAAEAAAADAAIAAAAAAAAAAAADAAEAAAAAAAAAAAADAAAAAAAAAAAAAAADAP//AAAAAAAAAAADAP7/AAAAAAAAAAADAP3/AAAAAAAAAAADAPv/AAAAAAAAAAACAPv/AAAAAAAAAAABAPv/AAAAAAAAAAAAAPv/AAAAAAAAAAD///v/AAAAAAAAAAD+//v/AAAAAAAAAAD9//v/AAAAAAAAAAD8//v/AAAAAAAAAAD7//v/AAAAAAAAAAABAP3/AAAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAADAPz/AAAAAAAAAAD/////AAAAAAAAAAAAAP7/AAAAAAAAAAAAAAEAAAADAAEAAAABAAIAAAADAAEAAAA=")
 tile_set = SubResource("TileSet_tlwt5")
 
 [node name="Mushie" parent="." instance=ExtResource("2_5a7ea")]
 position = Vector2(4, -108)
 
-[node name="Floater" parent="." instance=ExtResource("4_8j60k")]
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+autostart = true
 
-[node name="Floater2" parent="." instance=ExtResource("4_8j60k")]
-
-[node name="Floater3" parent="." instance=ExtResource("4_8j60k")]
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

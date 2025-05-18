@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxw1alhad3sai"]
+
+[ext_resource type="Texture2D" uid="uid://xg5ah7xmxbpx" path="res://Assets/Very Important/shit ass tree.png" id="1_avsvi"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_avsvi")
+offset = Vector2(0, -50)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(1, -49)
+polygon = PackedVector2Array(-40, 39, -51, 74, -1, 99, 49, 74, 40, 39)
