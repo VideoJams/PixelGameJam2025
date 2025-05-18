@@ -4,19 +4,36 @@ extends Node2D
 
 var mushie
 
+const Mushie = preload("res://Scenes/mushie.tscn")
 const Shooter = preload("res://scenes/shooter.tscn")
 const Floater = preload("res://scenes/floater.tscn")
 
 const TreeObstacle = preload("res://scenes/tree.tscn")
 
 func _ready():
+	setup_game()
 	for x in range(-40, 40):
 		for y in range(-40, 40):
 			var coords = Vector2i(x, y)
 			tilemap.set_cell(coords, 0, Vector2i(0,0))
-			
-	mushie = get_node("Mushie")
-	
+
+func setup_game():
+	for x in range(-40, 40):
+		for y in range(-40, 40):
+			var coords = Vector2i(x, y)
+			tilemap.set_cell(coords, 0, Vector2i(0,0))
+	mushie = Mushie.instantiate()
+	add_child(mushie)
+	mushie.global_position = Vector2(0,0)
+	mushie.mushie_dead.connect(reset_game)
+
+func reset_game():
+	for child in get_children():
+		if child.is_in_group("enemy") or child.is_in_group("projectile"):
+			child.queue_free()
+	mushie.queue_free()
+	setup_game()
+
 const EVEN_Q_DIRECTIONS = [
 	Vector2i(+1, 0),  # E
 	Vector2i(0, -1),  # NE
@@ -97,7 +114,7 @@ func new_enemy() -> void:
 		new_enemy = Shooter.instantiate()
 	else:
 		new_enemy = Floater.instantiate() 
-		
+	new_enemy.player = mushie
 	add_child(new_enemy)
 	new_enemy.enemy_dead.connect(enemy_death_growth)
 	

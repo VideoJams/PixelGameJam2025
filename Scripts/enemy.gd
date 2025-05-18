@@ -1,8 +1,5 @@
 class_name Enemy extends CharacterBody2D
 
-@onready var player = get_tree().get_current_scene().get_node("Mushie")
-@onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
-
 @export var hit_points: float
 @export var move_speed: float
 @export var attack_damage: float
@@ -12,17 +9,21 @@ class_name Enemy extends CharacterBody2D
 @export var attack_cooldown: float
 @export var attack_releases_on_frame: int
 
+var state: State = State.MOVING
+var damage_timer: float = 0.0
+var damage_duration: float = 0.2
+var can_attack: bool = true
+var player
+@onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
+
 signal enemy_dead(pos: Vector2, growth_amount: int)
 
 enum State { MOVING, ATTACKING, TAKING_DAMAGE, DEAD }
 
-var state: State = State.MOVING
-var damage_timer := 0.0
-var damage_duration := 0.2  # Seconds of hit freeze
-var canAttack: bool = true
-
 func _ready() -> void:
+	#initialize enemy specific values
 	$AttackTimer.wait_time = attack_cooldown
+	$Control/HealthBar.max_value = hit_points
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -31,10 +32,10 @@ func _physics_process(delta: float) -> void:
 			var direction = (player.global_position - global_position).normalized()
 			velocity = direction * move_speed
 			
-			if (canAttack):
+			if (can_attack):
 				if (global_position.distance_to(player.global_position) <= attack_range):
 					state = State.ATTACKING
-					canAttack = false
+					can_attack = false
 		State.ATTACKING:
 			# Stop movement while attacking (attack logic goes elsewhere)
 			$AnimatedSprite2D.play("attack")
@@ -62,6 +63,8 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(dmg: float) -> void:
 	hit_points -= dmg
+	$Control/HealthBar.value = hit_points
+	$Control/HealthBar.visible = true
 	if hit_points <= 0:
 		state = State.DEAD
 	elif state != State.TAKING_DAMAGE:
@@ -79,7 +82,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			state = State.MOVING
 
 func _on_attack_timer_timeout() -> void:
-	canAttack = true
+	can_attack = true
 	
 func attack() -> void:
 	pass

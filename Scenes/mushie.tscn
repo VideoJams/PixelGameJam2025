@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dtkqthu3qvgif"]
+[gd_scene load_steps=11 format=3 uid="uid://dtkqthu3qvgif"]
 
 [ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
 [ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scripts/mushie.gd" id="1_448ka"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://sng515waucud" path="res://Assets/Mushie/WalkRight2.png" id="4_jwnhi"]
 [ext_resource type="Texture2D" uid="uid://ct0qpyfjo42en" path="res://Assets/Mushie/WalkRight3.png" id="5_l8eyo"]
 [ext_resource type="Texture2D" uid="uid://p8rl5k20nmr1" path="res://Assets/Mushie/ShootinHand2.png" id="7_448ka"]
+[ext_resource type="Texture2D" uid="uid://bmx8248co1xeu" path="res://Assets/buttonGreen.png" id="8_jwnhi"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5qxbh"]
 animations = [{
@@ -68,3 +69,17 @@ scale = Vector2(0.958333, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = -111.0
+offset_top = 62.0
+offset_right = 111.0
+offset_bottom = 101.0
+texture_progress = ExtResource("8_jwnhi")

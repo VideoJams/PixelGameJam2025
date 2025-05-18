@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehlla"]
 
-[node name="projectile_generic" type="Area2D"]
+[node name="projectile_generic" type="Area2D" groups=["projectile"]]
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("1_28f15")

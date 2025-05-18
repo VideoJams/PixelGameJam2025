@@ -3,8 +3,14 @@ extends CharacterBody2D
 @onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
 
 @export var moveSpeed = 200.0
-@export var health = 250.0
+@export var health = 50.0
 @export var damage = 10.0
+
+signal mushie_dead
+
+func _ready() -> void:
+	$Control/HealthBar.max_value = health
+	$Control/HealthBar.value = health
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
@@ -39,3 +45,9 @@ func _handle_animation():
 
 func take_damage(damage: float):
 	health -= damage
+	$Control/HealthBar.value = health
+	if health <= 0:
+		die()
+
+func die():
+	emit_signal("mushie_dead")

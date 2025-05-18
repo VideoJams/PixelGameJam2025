@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://d1s3njvakry6p"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_mger4"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_mger4"]
 [ext_resource type="Script" uid="uid://b2yrq0sx47h8g" path="res://shooter.gd" id="2_ok5ye"]
 [ext_resource type="Texture2D" uid="uid://c5aygi4lahn2n" path="res://Assets/Enemies/Shooter/ShooterIdle1.png" id="3_ld1l8"]
 [ext_resource type="Texture2D" uid="uid://c5dnju7jqkh0l" path="res://Assets/Enemies/Shooter/ShooterFire1.png" id="3_suw1a"]
@@ -139,3 +139,9 @@ autoplay = "move"
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(16, 4)
 shape = SubResource("CapsuleShape2D_fvoti")
+
+[node name="Control" parent="." index="3"]
+offset_left = -44.0
+offset_top = 99.0
+offset_right = 76.0
+offset_bottom = 119.0
