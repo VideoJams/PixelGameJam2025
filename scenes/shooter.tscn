@@ -1,11 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://d1s3njvakry6p"]
+[gd_scene load_steps=27 format=3 uid="uid://d1s3njvakry6p"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_mger4"]
-[ext_resource type="Script" uid="uid://b2yrq0sx47h8g" path="res://shooter.gd" id="2_ok5ye"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_mger4"]
+[ext_resource type="Script" uid="uid://b2yrq0sx47h8g" path="res://Scripts/shooter.gd" id="2_ok5ye"]
+[ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="3_65dik"]
 [ext_resource type="Texture2D" uid="uid://c5aygi4lahn2n" path="res://Assets/Enemies/Shooter/ShooterIdle1.png" id="3_ld1l8"]
 [ext_resource type="Texture2D" uid="uid://c5dnju7jqkh0l" path="res://Assets/Enemies/Shooter/ShooterFire1.png" id="3_suw1a"]
 [ext_resource type="Texture2D" uid="uid://pxtc580y6xfl" path="res://Assets/Enemies/Shooter/ShooterCharge1.png" id="3_xxh7r"]
 [ext_resource type="Texture2D" uid="uid://bdpjvl1n6we7o" path="res://Assets/Enemies/Shooter/ShooterFire2.png" id="4_a2wj4"]
+[ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="4_snegt"]
 [ext_resource type="Texture2D" uid="uid://fa0srrgee48b" path="res://Assets/Enemies/Shooter/ShooterCharge2.png" id="4_ts0hh"]
 [ext_resource type="Texture2D" uid="uid://bm6ertde322pt" path="res://Assets/Enemies/Shooter/ShooterIdle2.png" id="4_xxh7r"]
 [ext_resource type="Texture2D" uid="uid://bye6tew04xqo1" path="res://Assets/Enemies/Shooter/ShooterFire3.png" id="5_jfxtt"]
@@ -122,14 +124,15 @@ height = 188.0
 
 [node name="Shooter" instance=ExtResource("1_mger4")]
 script = ExtResource("2_ok5ye")
-hit_points = 40.0
-move_speed = 100.0
+hit_points = 50.0
 attack_damage = 10.0
 growth_on_death = 2
 has_ranged_attack = true
 attack_range = 1000.0
 attack_cooldown = 3.0
 attack_releases_on_frame = 2
+sound_hurt = ExtResource("3_65dik")
+sound_die = ExtResource("4_snegt")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_ts0hh")

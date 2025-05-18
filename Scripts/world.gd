@@ -86,7 +86,7 @@ func enemy_death_growth(enemy_pos: Vector2, growth_epicenter: int) -> void:
 		apply_growth_on_cell(n, neighborGrowth)
 	
 func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
-	#These will need to change whenever the TileSet is updated
+	#These will need to csdashange whenever the TileSet is updated
 	var layer_index: int = 0
 	
 	var source_id: int = tilemap.get_cell_source_id(cell)
@@ -105,8 +105,7 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 			add_child(new_tree)
 			new_tree.global_position = tilemap.to_global(tilemap.map_to_local(cell))
 			new_tree.z_index = int(global_position.y)
-			mushie.gain_point()
-			print("point gain")
+			mushie.add_points(1)
 		
 		var new_atlas_coords: Vector2i = Vector2i(new_linear_index, 0)
 		tilemap.set_cell(cell, source_id, new_atlas_coords)

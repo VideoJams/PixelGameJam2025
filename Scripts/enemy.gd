@@ -9,12 +9,18 @@ class_name Enemy extends CharacterBody2D
 @export var attack_cooldown: float
 @export var attack_releases_on_frame: int
 
+@export var sound_attack_startup: AudioStream
+@export var sound_attack_launch: AudioStream
+@export var sound_hurt: AudioStream
+@export var sound_die: AudioStream
+
 var state: State = State.MOVING
 var damage_timer: float = 0.0
 var damage_duration: float = 0.2
 var can_attack: bool = true
 var player
 @onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
+@onready var audio_player = $AudioStreamPlayer2D
 
 signal enemy_dead(pos: Vector2, growth_amount: int)
 
@@ -31,9 +37,11 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.play("move")
 			var direction = (player.global_position - global_position).normalized()
 			velocity = direction * move_speed
+			$AnimatedSprite2D.flip_h = player.global_position.x > global_position.x
 			
 			if (can_attack):
 				if (global_position.distance_to(player.global_position) <= attack_range):
+					play_sound(sound_attack_startup)
 					state = State.ATTACKING
 					can_attack = false
 		State.ATTACKING:
@@ -46,11 +54,6 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.play("take_damage")
 			if damage_timer <= 0.0:
 				state = State.MOVING
-		State.DEAD:
-			$AnimatedSprite2D.play("death")
-			$CollisionShape2D.disabled = true
-			velocity = Vector2.ZERO
-	$AnimatedSprite2D.flip_h = player.global_position.x > global_position.x
 	move_and_slide()
 
 #func move_towards_player(speed: float) -> void:
@@ -61,17 +64,28 @@ func _physics_process(delta: float) -> void:
 		#$AnimatedSprite2D.flip_h = player.global_position.x > global_position.x
 		#move_and_slidew()
 
+func die() -> void:
+	state = State.DEAD
+	$AnimatedSprite2D.play("death")
+	set_collision_layer_value(2, false)
+	set_collision_mask_value(3, false)
+	# $CollisionShape2D.disabled = true
+	velocity = Vector2.ZERO
+	play_sound(sound_die)
+
 func take_damage(dmg: float) -> void:
 	hit_points -= dmg
 	$Control/HealthBar.value = hit_points
 	$Control/HealthBar.visible = true
 	if hit_points <= 0:
-		state = State.DEAD
-	elif state != State.TAKING_DAMAGE:
-		# You can hit enemies while they're stunned, but you can't stunlock them
-		# without perfectly timing when they break out of stun
-		state = State.TAKING_DAMAGE
-		damage_timer = damage_duration
+		die()
+	else:
+		play_sound(sound_hurt)
+		if state != State.TAKING_DAMAGE:
+			# You can hit enemies while they're stunned, but you can't stunlock them
+			# without perfectly timing when they break out of stun
+			state = State.TAKING_DAMAGE
+			damage_timer = damage_duration
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match ($AnimatedSprite2D.animation):
@@ -86,9 +100,15 @@ func _on_attack_timer_timeout() -> void:
 	
 func attack() -> void:
 	pass
+	
+func play_sound(sound: AudioStream):
+	audio_player.stream = sound
+	audio_player.pitch_scale = randf_range(0.8, 1.2)
+	audio_player.play()
 
 
 func _on_animated_sprite_2d_frame_changed() -> void:
 	if ($AnimatedSprite2D.animation == "attack" && $AnimatedSprite2D.frame == attack_releases_on_frame):
+		play_sound(sound_attack_launch)
 		attack()
 		$AttackTimer.start()

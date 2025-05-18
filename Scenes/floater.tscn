@@ -1,34 +1,55 @@
-[gd_scene load_steps=14 format=3 uid="uid://wt4yof7mqoyk"]
+[gd_scene load_steps=21 format=3 uid="uid://wt4yof7mqoyk"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_7658v"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_7658v"]
 [ext_resource type="Script" uid="uid://dld2tlivxdduc" path="res://Scripts/floater.gd" id="2_qt4hv"]
-[ext_resource type="Texture2D" uid="uid://djnjuftevggih" path="res://Assets/Enemies/Shooter/ShooterDeath1.png" id="3_bxlf7"]
+[ext_resource type="Texture2D" uid="uid://43r13oyv6jse" path="res://Assets/Enemies/Floater/FloatyDeath1.png" id="3_beytw"]
+[ext_resource type="Texture2D" uid="uid://cd8qydee2tj6k" path="res://Assets/Enemies/Floater/FloatyCharge1.png" id="3_kkf7u"]
+[ext_resource type="AudioStream" uid="uid://xiarm3vtohwg" path="res://Assets/Sounds/floater_charge.ogg" id="3_ld7iy"]
+[ext_resource type="AudioStream" uid="uid://c03voqgudwkyd" path="res://Assets/Sounds/floater_shoot.ogg" id="3_ts76x"]
 [ext_resource type="Texture2D" uid="uid://cei03f8ioymlt" path="res://Assets/Enemies/Floater/FloatyMove1.png" id="3_xqj1n"]
-[ext_resource type="Texture2D" uid="uid://byiu3408dqmkd" path="res://Assets/Enemies/Shooter/ShooterDeath2.png" id="4_l8orq"]
+[ext_resource type="Texture2D" uid="uid://cnqnwratt8loa" path="res://Assets/Enemies/Floater/FloatyDeath2.png" id="4_hp4f5"]
+[ext_resource type="Texture2D" uid="uid://d25pri24sn1xb" path="res://Assets/Enemies/Floater/FloatyCharge2.png" id="4_iohoh"]
+[ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="4_ld7iy"]
 [ext_resource type="Texture2D" uid="uid://dmuqwe4ci3vxo" path="res://Assets/Enemies/Floater/FloatyMove2.png" id="4_pd32t"]
-[ext_resource type="Texture2D" uid="uid://bfpuyfdrqkrto" path="res://Assets/Enemies/Shooter/ShooterDeath3.png" id="5_3c8bm"]
+[ext_resource type="Texture2D" uid="uid://7fnenkq5oyf0" path="res://Assets/Enemies/Floater/FloatyCharge3.png" id="5_ase3r"]
+[ext_resource type="Texture2D" uid="uid://dndovnqe5i43j" path="res://Assets/Enemies/Floater/FloatyDeath3.png" id="5_qtljt"]
+[ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="5_rdaq8"]
 [ext_resource type="Texture2D" uid="uid://c011h68cgx552" path="res://Assets/Enemies/Floater/FloatyDamage.png" id="5_xqj1n"]
-[ext_resource type="Texture2D" uid="uid://bkonmysfp7nx1" path="res://Assets/Enemies/Shooter/ShooterDeath4.png" id="6_nn38f"]
-[ext_resource type="Texture2D" uid="uid://b1bm3cff436ex" path="res://Assets/Enemies/Shooter/ShooterDeath5.png" id="7_6g4rh"]
+[ext_resource type="Texture2D" uid="uid://pmm0l1sdgwu5" path="res://Assets/Enemies/Floater/FloatyDeath4.png" id="6_kkf7u"]
+[ext_resource type="Texture2D" uid="uid://cm6jw16opxu40" path="res://Assets/Enemies/Floater/FloatyDeath5.png" id="7_iohoh"]
 [ext_resource type="Texture2D" uid="uid://cd886kmx0guh4" path="res://Assets/buttonRed.png" id="11_l8orq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p8xcf"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_bxlf7")
+"texture": ExtResource("3_kkf7u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_l8orq")
+"texture": ExtResource("4_iohoh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_3c8bm")
+"texture": ExtResource("5_ase3r")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_beytw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_nn38f")
+"texture": ExtResource("4_hp4f5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_6g4rh")
+"texture": ExtResource("5_qtljt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kkf7u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_iohoh")
 }],
 "loop": false,
 "name": &"death",
@@ -60,14 +81,21 @@ height = 140.0
 
 [node name="Floater" instance=ExtResource("1_7658v")]
 script = ExtResource("2_qt4hv")
-hit_points = 50.0
+hit_points = 30.0
 move_speed = 100.0
 attack_damage = 20.0
 growth_on_death = 2
+attack_range = 800.0
+attack_cooldown = 3.0
+attack_releases_on_frame = 2
+sound_attack_startup = ExtResource("3_ld7iy")
+sound_attack_launch = ExtResource("3_ts76x")
+sound_hurt = ExtResource("4_ld7iy")
+sound_die = ExtResource("5_rdaq8")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_p8xcf")
-animation = &"death"
+animation = &"attack"
 autoplay = "move"
 
 [node name="CollisionShape2D" parent="." index="1"]
