@@ -29,6 +29,14 @@ func _physics_process(delta: float) -> void:
 	_handle_input(delta)
 	_handle_animation()
 	move_and_slide()
+	
+	if can_take_damage:
+		for i in range(get_slide_collision_count()):
+			var collision = get_slide_collision(i)
+			var collider = collision.get_collider()
+			if collider is PhysicsBody2D or collider is Area2D:
+				if (collider.collision_layer & (1 << 1)) != 0:
+					take_damage(10)
 
 func _handle_input(delta: float):
 	var inputVector = Vector2.ZERO
@@ -50,16 +58,18 @@ func _handle_input(delta: float):
 		audio_player.pitch_scale = randf_range(0.8, 1.2)
 		audio_player.play()
 		$AttackTimer.start()
+		$HandSprite.play("shoot", 3)
 		can_shoot = false
 
 
 func _handle_animation():
-	if velocity.length() > 0:
-		$AnimatedSprite2D.play("walk", 2)
-	else:
-		$AnimatedSprite2D.play("idle", 1)
-	$AnimatedSprite2D.flip_h = get_global_mouse_position().x < global_position.x
-	$HandSprite.look_at(get_global_mouse_position())
+	if can_take_damage:
+		if velocity.length() > 0:
+			$AnimatedSprite2D.play("walk", 2)
+		else:
+			$AnimatedSprite2D.play("idle", 1)
+		$AnimatedSprite2D.flip_h = get_global_mouse_position().x < global_position.x
+		$HandSprite.look_at(get_global_mouse_position())
 
 func add_growth_quota(growth):
 	display_growth += growth
@@ -90,12 +100,18 @@ func oneoff_sound(sound: AudioStream):
 	temp_player.connect("finished", Callable(temp_player, "queue_free"))
 
 func take_damage(damage: float):
-	health -= damage
-	$Control/HealthBar.value = health
-	oneoff_sound(sound_hurt)
-	
-	if health <= 0:
-		die()
+	if can_take_damage:
+		health -= damage
+		$Control/HealthBar.value = health
+		oneoff_sound(sound_hurt)
+		
+		if health <= 0:
+			die()
+		else:
+			can_take_damage = false
+			set_collision_mask_value(2, false)
+			$TakeDamageTimer.start()
+			$AnimatedSprite2D.play("take_damage", 1)
 
 func die():
 	emit_signal("mushie_dead")
@@ -103,3 +119,9 @@ func die():
 
 func _on_timer_timeout() -> void:
 	can_shoot = true
+	$HandSprite.play("ready")
+
+var can_take_damage: bool=true
+func _on_take_damage_timer_timeout() -> void:
+	set_collision_mask_value(2, true)
+	can_take_damage = true

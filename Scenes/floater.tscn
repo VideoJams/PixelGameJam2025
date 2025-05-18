@@ -82,7 +82,7 @@ height = 140.0
 [node name="Floater" instance=ExtResource("1_7658v")]
 script = ExtResource("2_qt4hv")
 hit_points = 30.0
-move_speed = 100.0
+move_speed = 150.0
 attack_damage = 20.0
 growth_on_death = 2
 attack_range = 800.0

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://xg5ah7xmxbpx" path="res://Assets/Very Important/shit ass tree.png" id="1_avsvi"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=["trees"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_avsvi")

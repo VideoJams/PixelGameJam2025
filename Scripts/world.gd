@@ -7,7 +7,9 @@ var mushie
 const Mushie = preload("res://Scenes/mushie.tscn")
 const Shooter = preload("res://scenes/shooter.tscn")
 const Floater = preload("res://scenes/floater.tscn")
-
+const ClumperBig = preload("res://scenes/clumper_big.tscn")
+const ClumperMedium = preload("res://scenes/clumper_medium.tscn")
+const ClumperSmall = preload("res://scenes/clumper_small.tscn")
 const TreeObstacle = preload("res://scenes/tree.tscn")
 
 func _ready():
@@ -29,7 +31,7 @@ func setup_game():
 
 func reset_game():
 	for child in get_children():
-		if child.is_in_group("enemy") or child.is_in_group("projectile"):
+		if child.is_in_group("enemy") or child.is_in_group("projectile") or child.is_in_group("trees"):
 			child.queue_free()
 	mushie.queue_free()
 	setup_game()
@@ -75,6 +77,24 @@ func get_hex_neighbors(center: Vector2i) -> Array[Vector2i]:
 
 	return neighbors
 	
+func clumper_split(enemy_pos: Vector2, split_index: int) -> void:
+	for i in range(2):
+		var new_enemy
+		if split_index == 0:
+			new_enemy = ClumperMedium.instantiate()
+			new_enemy.enemy_dead.connect(clumper_split)
+		else:
+			new_enemy = ClumperSmall.instantiate()
+			new_enemy.enemy_dead.connect(enemy_death_growth)
+			
+		new_enemy.player = mushie
+		add_child(new_enemy)
+
+		var new_x = enemy_pos.x -150 + (randf() * 300)
+		var new_y = enemy_pos.y -150 + (randf() * 300)
+		
+		new_enemy.global_position = Vector2(new_x, new_y)
+	
 func enemy_death_growth(enemy_pos: Vector2, growth_epicenter: int) -> void:
 	var enemy_pos_to_tilemap = tilemap.to_local(enemy_pos)
 	var cell: Vector2i = tilemap.local_to_map(enemy_pos_to_tilemap)
@@ -92,8 +112,7 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 	var source_id: int = tilemap.get_cell_source_id(cell)
 	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(cell)
 	
-	var current_linear_index: int = atlas_coords.x
-	
+	var current_linear_index: int = atlas_coords.y
 	if current_linear_index < 4:
 		var new_linear_index: int = current_linear_index + growth_increase
 		mushie.add_growth_quota(growth_increase)
@@ -107,18 +126,27 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 			new_tree.z_index = int(global_position.y)
 			mushie.add_points(1)
 		
-		var new_atlas_coords: Vector2i = Vector2i(new_linear_index, 0)
+		var new_atlas_coords: Vector2i = Vector2i(0, new_linear_index)
 		tilemap.set_cell(cell, source_id, new_atlas_coords)
 	
 func new_enemy() -> void:
 	var new_enemy
-	if (randf() >= 0.5):
+	var enemy_choice = randf()
+	var is_clumper = false
+	if (enemy_choice >= 0.8):
 		new_enemy = Shooter.instantiate()
+	elif (enemy_choice >= 0.5):
+		new_enemy = ClumperBig.instantiate()
+		is_clumper = true
 	else:
 		new_enemy = Floater.instantiate() 
 	new_enemy.player = mushie
 	add_child(new_enemy)
-	new_enemy.enemy_dead.connect(enemy_death_growth)
+	
+	if is_clumper:
+		new_enemy.enemy_dead.connect(clumper_split)
+	else:
+		new_enemy.enemy_dead.connect(enemy_death_growth)
 	
 	# Generate a location
 	var player_position = mushie.global_position

@@ -91,6 +91,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	match ($AnimatedSprite2D.animation):
 		"death":
 			emit_signal("enemy_dead", global_position, growth_on_death)
+			misc_death_properties()
 			queue_free()
 		"attack":
 			state = State.MOVING
@@ -99,6 +100,9 @@ func _on_attack_timer_timeout() -> void:
 	can_attack = true
 	
 func attack() -> void:
+	pass
+	
+func misc_death_properties() -> void:
 	pass
 	
 func play_sound(sound: AudioStream):

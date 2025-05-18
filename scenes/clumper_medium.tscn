@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://uxi83xchsaxj"]
+
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_5xee8"]
+[ext_resource type="Texture2D" uid="uid://5p087x565tin" path="res://Assets/Enemies/Clumper/BigClumperWalk1.png" id="2_1jpu7"]
+[ext_resource type="Texture2D" uid="uid://dgoeixcqelw5a" path="res://Assets/Enemies/Clumper/BiggerClumperDeath1.png" id="2_pqmv3"]
+[ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="2_vt2ha"]
+[ext_resource type="Texture2D" uid="uid://dook53evkmvbg" path="res://Assets/Enemies/Clumper/BigClumperWalk2.png" id="3_6wkmj"]
+[ext_resource type="Texture2D" uid="uid://do7hwbrpkk6ox" path="res://Assets/Enemies/Clumper/BiggerClumperDeath2.png" id="3_bs6qb"]
+[ext_resource type="Texture2D" uid="uid://16leb87b8m4e" path="res://Assets/Enemies/Clumper/BigClumperWalk3.png" id="4_pqmv3"]
+[ext_resource type="Texture2D" uid="uid://d1nbafwgqgpu5" path="res://Assets/Enemies/Clumper/BiggerClumperDeath3.png" id="4_vt2ha"]
+[ext_resource type="Texture2D" uid="uid://dwwwx5vc8pmp2" path="res://Assets/Enemies/Clumper/BigClumperDamaged.png" id="5_bs6qb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bs6qb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pqmv3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bs6qb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vt2ha")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_bs6qb")
+}],
+"loop": true,
+"name": &"take_damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1jpu7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6wkmj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pqmv3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6wkmj")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5xee8"]
+radius = 35.0
+height = 138.0
+
+[node name="ClumperMedium" instance=ExtResource("1_5xee8")]
+hit_points = 10.0
+move_speed = 175.0
+attack_damage = 10.0
+growth_on_death = 1
+sound_hurt = ExtResource("2_vt2ha")
+sound_die = ExtResource("2_vt2ha")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_bs6qb")
+animation = &"death"
+autoplay = "walk"
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(3, 13)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5xee8")
