@@ -58,7 +58,7 @@ height = 138.0
 
 [node name="ClumperMedium" instance=ExtResource("1_5xee8")]
 hit_points = 10.0
-move_speed = 175.0
+move_speed = 200.0
 attack_damage = 10.0
 growth_on_death = 1
 sound_hurt = ExtResource("2_vt2ha")

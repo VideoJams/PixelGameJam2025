@@ -113,17 +113,19 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(cell)
 	
 	var current_linear_index: int = atlas_coords.y
-	if current_linear_index < 4:
+	if current_linear_index < 5:
 		var new_linear_index: int = current_linear_index + growth_increase
 		mushie.add_growth_quota(growth_increase)
 		
-		# At 4 (cap at 4), spawn tree
-		if new_linear_index >= 4:
-			new_linear_index = 4
+		# At 5 (cap at 5), spawn tree
+		if new_linear_index >= 5:
+			new_linear_index = 5
 			var new_tree = TreeObstacle.instantiate()
 			add_child(new_tree)
-			new_tree.global_position = tilemap.to_global(tilemap.map_to_local(cell))
-			new_tree.z_index = int(global_position.y)
+			
+			var converted_position = tilemap.to_global(tilemap.map_to_local(cell))
+			converted_position.y -= 100
+			new_tree.global_position = converted_position
 			mushie.add_points(1)
 		
 		var new_atlas_coords: Vector2i = Vector2i(0, new_linear_index)

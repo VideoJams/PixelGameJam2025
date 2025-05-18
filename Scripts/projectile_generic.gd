@@ -28,6 +28,11 @@ func configure_as_player_projectile() -> void:
 	is_enemy_projectile = false
 	set_collision_layer_value(3, true)
 	set_collision_mask_value(2, true)
+	set_animation("player")
+
+func set_animation(anim_name: String) -> void:
+	$Sprite2D.play(anim_name)
+	$Sprite2D.look_at(target_position)
 	
 func configure_as_enemy_projectile() -> void:
 	set_collision_layer_value(4, true)

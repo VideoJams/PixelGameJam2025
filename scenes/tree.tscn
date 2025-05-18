@@ -1,17 +1,78 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxw1alhad3sai"]
+[gd_scene load_steps=14 format=3 uid="uid://dxw1alhad3sai"]
 
-[ext_resource type="Texture2D" uid="uid://xg5ah7xmxbpx" path="res://Assets/Very Important/shit ass tree.png" id="1_avsvi"]
+[ext_resource type="Texture2D" uid="uid://vi8t4gu7is6a" path="res://Assets/Tilesets/BigTree1.png" id="1_xprpn"]
+[ext_resource type="Texture2D" uid="uid://bwlabjr258nl8" path="res://Assets/Tilesets/BigTree2.png" id="2_2bmcu"]
+[ext_resource type="Texture2D" uid="uid://bnk6w18m5g2ea" path="res://Assets/Tilesets/BigTree3.png" id="3_528u0"]
+[ext_resource type="Texture2D" uid="uid://cg8u0k17qusbv" path="res://Assets/Tilesets/BigTree4.png" id="4_m0l3a"]
+[ext_resource type="Texture2D" uid="uid://e5k472n1lejl" path="res://Assets/Tilesets/BigTree5.png" id="5_70dru"]
+[ext_resource type="Texture2D" uid="uid://b162m0ypmdihh" path="res://Assets/Tilesets/BigTree6.png" id="6_l31us"]
+[ext_resource type="Texture2D" uid="uid://ddd6ow53c7h4u" path="res://Assets/Tilesets/BigTree7.png" id="7_223ge"]
+[ext_resource type="Texture2D" uid="uid://5ubudisk3e1i" path="res://Assets/Tilesets/BigTree8.png" id="8_rtdfa"]
+[ext_resource type="Texture2D" uid="uid://bcmltyyea2al0" path="res://Assets/Tilesets/BigTree9.png" id="9_yyqri"]
+[ext_resource type="Texture2D" uid="uid://crxpd4u22qwxi" path="res://Assets/Tilesets/BigTree10.png" id="10_61e73"]
+[ext_resource type="Texture2D" uid="uid://nffelmsww4r1" path="res://Assets/Tilesets/BigTreeFinal.png" id="11_p6xsx"]
+[ext_resource type="AudioStream" uid="uid://brh7tel0k42y" path="res://Assets/Sounds/tree_grow.ogg" id="12_2bmcu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ict6q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xprpn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2bmcu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_528u0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_m0l3a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_70dru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_l31us")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_223ge")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rtdfa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yyqri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_61e73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_p6xsx")
+}],
+"loop": false,
+"name": &"grow",
+"speed": 10.0
+}]
 
 [node name="Node2D" type="Node2D" groups=["trees"]]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_avsvi")
-offset = Vector2(0, -50)
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ict6q")
+animation = &"grow"
+autoplay = "grow"
+frame = 10
+frame_progress = 1.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+z_as_relative = false
+y_sort_enabled = true
 collision_layer = 16
 collision_mask = 15
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(1, -49)
+position = Vector2(-1, 29)
 polygon = PackedVector2Array(-40, 39, -51, 74, -1, 99, 49, 74, 40, 39)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_2bmcu")
+autoplay = true

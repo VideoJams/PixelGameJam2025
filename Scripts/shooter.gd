@@ -21,6 +21,7 @@ func attack() -> void:
 		
 		# Set the target position far in the direction of the rotated vector
 		pellet_instance.target_position = global_position + rotated_direction * 1000
+		pellet_instance.set_animation("inky")
 
 		pellet_instance.damage = 10
 		pellet_instance.move_speed = 200

@@ -68,8 +68,12 @@ func _handle_animation():
 			$AnimatedSprite2D.play("walk", 2)
 		else:
 			$AnimatedSprite2D.play("idle", 1)
-		$AnimatedSprite2D.flip_h = get_global_mouse_position().x < global_position.x
-		$HandSprite.look_at(get_global_mouse_position())
+			
+	var global_mouse = get_global_mouse_position()
+	var flip = global_mouse.x < global_position.x
+	$AnimatedSprite2D.flip_h = flip
+	$HandSprite.look_at(global_mouse)
+	$HandSprite.flip_v = flip
 
 func add_growth_quota(growth):
 	display_growth += growth

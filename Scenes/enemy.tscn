@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bmx8248co1xeu" path="res://Assets/buttonGreen.png" id="2_1f0kj"]
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+z_as_relative = false
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 20
 script = ExtResource("1_hghv2")
