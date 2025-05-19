@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://d1s3njvakry6p"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_mger4"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_mger4"]
 [ext_resource type="Script" uid="uid://b2yrq0sx47h8g" path="res://Scripts/shooter.gd" id="2_ok5ye"]
 [ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="3_65dik"]
 [ext_resource type="Texture2D" uid="uid://c5aygi4lahn2n" path="res://Assets/Enemies/Shooter/ShooterIdle1.png" id="3_ld1l8"]
@@ -129,7 +129,6 @@ script = ExtResource("2_ok5ye")
 hit_points = 50.0
 attack_damage = 10.0
 growth_on_death = 3
-has_ranged_attack = true
 attack_range = 1000.0
 attack_cooldown = 3.0
 attack_releases_on_frame = 2
@@ -151,4 +150,8 @@ shape = SubResource("CapsuleShape2D_fvoti")
 offset_left = -44.0
 offset_top = 99.0
 offset_right = 76.0
-offset_bottom = 119.0
+offset_bottom = 125.0
+
+[node name="HealthBar" parent="Control" index="0"]
+offset_left = -37.0
+offset_right = 163.0

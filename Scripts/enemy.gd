@@ -4,7 +4,6 @@ class_name Enemy extends CharacterBody2D
 @export var move_speed: float
 @export var attack_damage: float
 @export var growth_on_death: int
-@export var has_ranged_attack: bool
 @export var attack_range: float 
 @export var attack_cooldown: float
 @export var attack_releases_on_frame: int

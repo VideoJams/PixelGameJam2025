@@ -5,12 +5,12 @@ extends Node2D
 var mushie
 
 const Mushie = preload("res://Scenes/mushie.tscn")
-const Shooter = preload("res://scenes/shooter.tscn")
-const Floater = preload("res://scenes/floater.tscn")
-const ClumperBig = preload("res://scenes/clumper_big.tscn")
-const ClumperMedium = preload("res://scenes/clumper_medium.tscn")
-const ClumperSmall = preload("res://scenes/clumper_small.tscn")
-const TreeObstacle = preload("res://scenes/tree.tscn")
+const Shooter = preload("res://Scenes/shooter.tscn")
+const Floater = preload("res://Scenes/floater.tscn")
+const ClumperBig = preload("res://Scenes/clumper_big.tscn")
+const ClumperMedium = preload("res://Scenes/clumper_medium.tscn")
+const ClumperSmall = preload("res://Scenes/clumper_small.tscn")
+const TreeObstacle = preload("res://Scenes/tree.tscn")
 
 const MAP_MIN = -40
 const MAP_MAX = 40
@@ -46,12 +46,16 @@ func freeze_enemies():
 	for child in get_children():
 		if child.is_in_group("enemy") or child.is_in_group("projectile") or child.is_in_group("trees"):
 			child.set_physics_process(false)
+			if child.has_node("AnimatedSprite2D"): #pause attack animations so they don't fire during freeze
+				child.get_node("AnimatedSprite2D").pause()
 
 func unfreeze_enemies():
 	$EnemySpawnTimer.paused = false
 	for child in get_children():
 		if child.is_in_group("enemy") or child.is_in_group("projectile") or child.is_in_group("trees"):
 			child.set_physics_process(true)
+			if child.has_node("AnimatedSprite2D"):
+				child.get_node("AnimatedSprite2D").play()
 
 const EVEN_Q_DIRECTIONS = [
 	Vector2i(+1, 0),  # E
@@ -161,10 +165,11 @@ func new_enemy() -> void:
 	else:
 		new_enemy = Floater.instantiate() 
 	new_enemy.player = mushie
-	add_child(new_enemy)
 	
 	if is_clumper:
 		new_enemy.enemy_dead.connect(clumper_split)
+		if $EnemySpawnTimer.paused: #Don't let clumpers act if game is paused
+			new_enemy.set_physics_process(false)
 	else:
 		new_enemy.enemy_dead.connect(enemy_death_growth)
 	
@@ -174,8 +179,9 @@ func new_enemy() -> void:
 	var spawn_radius = 1200
 	var x = player_position.x + spawn_radius * cos(angle)
 	var y = player_position.y + spawn_radius * sin(angle)
-	
 	new_enemy.global_position = Vector2(x,y)
+	
+	add_child(new_enemy)
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	new_enemy()

@@ -15,12 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://bp7cncro75kgs" path="res://Assets/Mushie/MushieDeath/MushieDeath6.png" id="7_olf0c"]
 [ext_resource type="Texture2D" uid="uid://dn8klppyes11n" path="res://Assets/Mushie/ShootinHandHold.png" id="8_80f1l"]
 [ext_resource type="Texture2D" uid="uid://0eurpayxsych" path="res://Assets/Mushie/MushieDeath/MushieDeath7.png" id="8_gu0dv"]
-[ext_resource type="Texture2D" uid="uid://bmx8248co1xeu" path="res://Assets/UI/buttonGreen.png" id="8_jwnhi"]
 [ext_resource type="Texture2D" uid="uid://c8qkawrrwuu6q" path="res://Assets/Mushie/ShootinHandHoldCharged.png" id="9_0jjte"]
 [ext_resource type="Texture2D" uid="uid://cpapxhuoqdhj3" path="res://Assets/Mushie/MushieDeath/MushieDeath8.png" id="9_pvs6e"]
 [ext_resource type="Texture2D" uid="uid://budfq1t64wm5b" path="res://Assets/Mushie/MushieDeath/MushieDeath9.png" id="10_4nj6a"]
 [ext_resource type="Texture2D" uid="uid://b8wdxc3g6h8lx" path="res://Assets/Mushie/ShootinHandRelease.png" id="10_xnwgv"]
 [ext_resource type="Texture2D" uid="uid://xdmqn1m4vbvn" path="res://Assets/Mushie/MushieDeath/MushieDeath10.png" id="11_hxjlx"]
+[ext_resource type="Texture2D" uid="uid://c8xeqhnuh7ake" path="res://Assets/UI/barHorizontal_green_mid 200.png" id="21_gu0dv"]
 [ext_resource type="Texture2D" uid="uid://545oaiveod7b" path="res://Assets/UI/UpgradeMenu.png" id="22_6krk0"]
 [ext_resource type="Texture2D" uid="uid://dfww3hbnw04oq" path="res://Assets/UI/UMButtonHover.png" id="23_olf0c"]
 [ext_resource type="Texture2D" uid="uid://btbq4m63kf4pu" path="res://Assets/UI/UMButton.png" id="23_onr0l"]
@@ -169,11 +169,12 @@ offset_bottom = 40.0
 
 [node name="HealthBar" type="TextureProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = -111.0
-offset_top = 62.0
-offset_right = 111.0
-offset_bottom = 101.0
-texture_progress = ExtResource("8_jwnhi")
+offset_left = -100.0
+offset_top = 61.0
+offset_right = 100.0
+offset_bottom = 87.0
+value = 100.0
+texture_progress = ExtResource("21_gu0dv")
 
 [node name="Points" type="Label" parent="Control"]
 layout_mode = 0
