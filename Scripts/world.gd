@@ -27,14 +27,14 @@ func setup_game():
 	mushie = Mushie.instantiate()
 	add_child(mushie)
 	mushie.global_position = Vector2(0,0)
-	mushie.mushie_dead.connect(reset_game)
+	mushie.mushie_dead.connect(freeze_enemies)
+	mushie.menu.connect(end_game)
 
-func reset_game():
+func freeze_enemies():
+	$EnemySpawnTimer.paused = true
 	for child in get_children():
 		if child.is_in_group("enemy") or child.is_in_group("projectile") or child.is_in_group("trees"):
-			child.queue_free()
-	mushie.queue_free()
-	setup_game()
+			child.set_physics_process(false)
 
 const EVEN_Q_DIRECTIONS = [
 	Vector2i(+1, 0),  # E
@@ -70,13 +70,13 @@ func get_hex_neighbors(center: Vector2i) -> Array[Vector2i]:
 			Vector2i(+1, 0), Vector2i(+1, -1), Vector2i(0, -1),
 			Vector2i(-1, 0), Vector2i(0, +1), Vector2i(+1, +1)
 		]
-
+	
 	var neighbors: Array[Vector2i] = []
 	for dir in directions:
 		neighbors.append(center + dir)
-
-	return neighbors
 	
+	return neighbors
+
 func clumper_split(enemy_pos: Vector2, split_index: int) -> void:
 	for i in range(2):
 		var new_enemy
@@ -89,22 +89,22 @@ func clumper_split(enemy_pos: Vector2, split_index: int) -> void:
 			
 		new_enemy.player = mushie
 		add_child(new_enemy)
-
+		
 		var new_x = enemy_pos.x -150 + (randf() * 300)
 		var new_y = enemy_pos.y -150 + (randf() * 300)
 		
 		new_enemy.global_position = Vector2(new_x, new_y)
-	
+
 func enemy_death_growth(enemy_pos: Vector2, growth_epicenter: int) -> void:
 	var enemy_pos_to_tilemap = tilemap.to_local(enemy_pos)
 	var cell: Vector2i = tilemap.local_to_map(enemy_pos_to_tilemap)
 	apply_growth_on_cell(cell, growth_epicenter)
-
+	
 	var neighbors = get_hex_neighbors(cell)
 	var neighborGrowth = growth_epicenter - 1
 	for n in neighbors:
 		apply_growth_on_cell(n, neighborGrowth)
-	
+
 func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 	#These will need to csdashange whenever the TileSet is updated
 	var layer_index: int = 0
@@ -127,10 +127,11 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 			converted_position.y -= 100
 			new_tree.global_position = converted_position
 			mushie.add_points(1)
+			mushie.total_trees += 1
 		
 		var new_atlas_coords: Vector2i = Vector2i(0, new_linear_index)
 		tilemap.set_cell(cell, source_id, new_atlas_coords)
-	
+
 func new_enemy() -> void:
 	var new_enemy
 	var enemy_choice = randf()
@@ -162,3 +163,6 @@ func new_enemy() -> void:
 func _on_enemy_spawn_timer_timeout() -> void:
 	new_enemy()
 	pass # Replace with function body.
+
+func end_game():
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")

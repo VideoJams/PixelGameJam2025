@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmx8248co1xeu"
-path="res://.godot/imported/buttonGreen.png-431b70cceafcf34128cc4cef37584e32.ctex"
+uid="uid://btcjvr4kkjpi0"
+path="res://.godot/imported/MushieDeath2.png-94144866d837ce1008ad362064e35a05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/buttonGreen.png"
-dest_files=["res://.godot/imported/buttonGreen.png-431b70cceafcf34128cc4cef37584e32.ctex"]
+source_file="res://Assets/Mushie/MushieDeath/MushieDeath2.png"
+dest_files=["res://.godot/imported/MushieDeath2.png-94144866d837ce1008ad362064e35a05.ctex"]
 
 [params]
 

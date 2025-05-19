@@ -1,19 +1,64 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtkqthu3qvgif"]
+[gd_scene load_steps=25 format=3 uid="uid://dtkqthu3qvgif"]
 
 [ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
 [ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scripts/mushie.gd" id="1_448ka"]
 [ext_resource type="Texture2D" uid="uid://cw0e7w2q7ogps" path="res://Assets/Mushie/IdleRight2.png" id="2_678c6"]
+[ext_resource type="Texture2D" uid="uid://bdwrr76jvgu8o" path="res://Assets/Mushie/MushieDeath/MushieDeath.png" id="2_oqh3x"]
 [ext_resource type="Texture2D" uid="uid://cgs6c00d70y5b" path="res://Assets/Mushie/WalkRight1.png" id="3_448ka"]
+[ext_resource type="Texture2D" uid="uid://btcjvr4kkjpi0" path="res://Assets/Mushie/MushieDeath/MushieDeath2.png" id="3_j2a57"]
+[ext_resource type="Texture2D" uid="uid://cgg8sip86yop4" path="res://Assets/Mushie/MushieDeath/MushieDeath3.png" id="4_6krk0"]
 [ext_resource type="Texture2D" uid="uid://iyda6gvr1wch" path="res://Assets/Mushie/MushieDamage.png" id="4_e67no"]
 [ext_resource type="Texture2D" uid="uid://sng515waucud" path="res://Assets/Mushie/WalkRight2.png" id="4_jwnhi"]
 [ext_resource type="Texture2D" uid="uid://ct0qpyfjo42en" path="res://Assets/Mushie/WalkRight3.png" id="5_l8eyo"]
+[ext_resource type="Texture2D" uid="uid://digsjb4jtaibk" path="res://Assets/Mushie/MushieDeath/MushieDeath4.png" id="5_onr0l"]
+[ext_resource type="Texture2D" uid="uid://ced0tyrdgiut8" path="res://Assets/Mushie/MushieDeath/MushieDeath5.png" id="6_72w1u"]
+[ext_resource type="Texture2D" uid="uid://bp7cncro75kgs" path="res://Assets/Mushie/MushieDeath/MushieDeath6.png" id="7_olf0c"]
 [ext_resource type="Texture2D" uid="uid://dn8klppyes11n" path="res://Assets/Mushie/ShootinHandHold.png" id="8_80f1l"]
-[ext_resource type="Texture2D" uid="uid://bmx8248co1xeu" path="res://Assets/buttonGreen.png" id="8_jwnhi"]
+[ext_resource type="Texture2D" uid="uid://0eurpayxsych" path="res://Assets/Mushie/MushieDeath/MushieDeath7.png" id="8_gu0dv"]
+[ext_resource type="Texture2D" uid="uid://bmx8248co1xeu" path="res://Assets/UI/buttonGreen.png" id="8_jwnhi"]
 [ext_resource type="Texture2D" uid="uid://c8qkawrrwuu6q" path="res://Assets/Mushie/ShootinHandHoldCharged.png" id="9_0jjte"]
+[ext_resource type="Texture2D" uid="uid://cpapxhuoqdhj3" path="res://Assets/Mushie/MushieDeath/MushieDeath8.png" id="9_pvs6e"]
+[ext_resource type="Texture2D" uid="uid://budfq1t64wm5b" path="res://Assets/Mushie/MushieDeath/MushieDeath9.png" id="10_4nj6a"]
 [ext_resource type="Texture2D" uid="uid://b8wdxc3g6h8lx" path="res://Assets/Mushie/ShootinHandRelease.png" id="10_xnwgv"]
+[ext_resource type="Texture2D" uid="uid://xdmqn1m4vbvn" path="res://Assets/Mushie/MushieDeath/MushieDeath10.png" id="11_hxjlx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5qxbh"]
 animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("2_oqh3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_j2a57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6krk0")
+}, {
+"duration": 6.0,
+"texture": ExtResource("5_onr0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_72w1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_olf0c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gu0dv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pvs6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4nj6a")
+}, {
+"duration": 6.0,
+"texture": ExtResource("11_hxjlx")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_26utk")
@@ -84,12 +129,14 @@ animations = [{
 collision_mask = 26
 script = ExtResource("1_448ka")
 moveSpeed = 300.0
+health = 20.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_5qxbh")
-animation = &"take_damage"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.79875
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_26utk")
@@ -143,6 +190,25 @@ text = "Quota: 0/30"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GameOver" type="Control" parent="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameOverLabel" type="Label" parent="Control/GameOver"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="MenuButton" type="Button" parent="Control/GameOver"]
+layout_mode = 0
+offset_top = 100.0
+offset_right = 53.0
+offset_bottom = 131.0
+text = "Menu"
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="AttackTimer" type="Timer" parent="."]
@@ -152,5 +218,7 @@ one_shot = true
 [node name="TakeDamageTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="pressed" from="Control/GameOver/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TakeDamageTimer" to="." method="_on_take_damage_timer_timeout"]

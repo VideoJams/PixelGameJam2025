@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 var points = 0
 var display_growth = 0
-var total_growth = 0
+var total_trees = 0
 var quota = 30
 var next_quota = 40
 @export var moveSpeed = 200.0
@@ -17,9 +17,12 @@ var sound_shoot = preload("res://Assets/Sounds/player_shoot.ogg")
 var sound_hurt = preload("res://Assets/Sounds/player_hurt.ogg")
 var sound_quota  = preload("res://Assets/Sounds/quota_reached.ogg")
 
-var can_shoot = true
+var can_shoot: bool = true
+var can_take_damage: bool = true
 
+signal quota_reached
 signal mushie_dead
+signal menu
 
 func _ready() -> void:
 	$Control/HealthBar.max_value = health
@@ -61,7 +64,6 @@ func _handle_input(delta: float):
 		$HandSprite.play("shoot", 3)
 		can_shoot = false
 
-
 func _handle_animation():
 	if can_take_damage:
 		if velocity.length() > 0:
@@ -77,7 +79,6 @@ func _handle_animation():
 
 func add_growth_quota(growth):
 	display_growth += growth
-	total_growth += growth
 	if display_growth >= quota:
 		oneoff_sound(sound_quota)
 		display_growth = 0
@@ -85,9 +86,7 @@ func add_growth_quota(growth):
 		next_quota += 10
 		add_points(5)
 		
-		
 	$Control/Quota.text = "Quota: %d/%d" % [display_growth, quota]
-
 
 func add_points(point_add: int):
 	points += point_add
@@ -118,14 +117,25 @@ func take_damage(damage: float):
 			$AnimatedSprite2D.play("take_damage", 1)
 
 func die():
+	set_physics_process(false)
 	emit_signal("mushie_dead")
-
+	$AnimatedSprite2D.play("death")
+	$Control/Points.visible = false
+	$Control/Quota.visible = false
 
 func _on_timer_timeout() -> void:
 	can_shoot = true
 	$HandSprite.play("ready")
 
-var can_take_damage: bool=true
 func _on_take_damage_timer_timeout() -> void:
 	set_collision_mask_value(2, true)
 	can_take_damage = true
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if $AnimatedSprite2D.animation == "death":
+		$Control/GameOver.visible = true
+		$Control/GameOver/GameOverLabel.text = "Game over!
+		You grew a total of %d trees" % total_trees
+
+func _on_menu_button_pressed() -> void:
+	emit_signal("menu")

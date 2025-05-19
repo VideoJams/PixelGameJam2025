@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://wt4yof7mqoyk"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_7658v"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_7658v"]
 [ext_resource type="Script" uid="uid://dld2tlivxdduc" path="res://Scripts/floater.gd" id="2_qt4hv"]
 [ext_resource type="Texture2D" uid="uid://43r13oyv6jse" path="res://Assets/Enemies/Floater/FloatyDeath1.png" id="3_beytw"]
 [ext_resource type="Texture2D" uid="uid://cd8qydee2tj6k" path="res://Assets/Enemies/Floater/FloatyCharge1.png" id="3_kkf7u"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c011h68cgx552" path="res://Assets/Enemies/Floater/FloatyDamage.png" id="5_xqj1n"]
 [ext_resource type="Texture2D" uid="uid://pmm0l1sdgwu5" path="res://Assets/Enemies/Floater/FloatyDeath4.png" id="6_kkf7u"]
 [ext_resource type="Texture2D" uid="uid://cm6jw16opxu40" path="res://Assets/Enemies/Floater/FloatyDeath5.png" id="7_iohoh"]
-[ext_resource type="Texture2D" uid="uid://cd886kmx0guh4" path="res://Assets/buttonRed.png" id="11_l8orq"]
+[ext_resource type="Texture2D" uid="uid://cd886kmx0guh4" path="res://Assets/UI/buttonRed.png" id="11_l8orq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p8xcf"]
 animations = [{
