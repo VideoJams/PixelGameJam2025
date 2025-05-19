@@ -37,3 +37,7 @@ func set_animation(anim_name: String) -> void:
 func configure_as_enemy_projectile() -> void:
 	set_collision_layer_value(4, true)
 	set_collision_mask_value(1, true)
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	print("gone")
+	queue_free()
