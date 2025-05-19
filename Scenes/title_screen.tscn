@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd60jvdvy02ik"]
+
+[ext_resource type="Script" uid="uid://rl1amq57h872" path="res://Scripts/start_game.gd" id="1_klylv"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartGame" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Start Game"
+script = ExtResource("1_klylv")
+
+[connection signal="pressed" from="StartGame" to="StartGame" method="_on_pressed"]
