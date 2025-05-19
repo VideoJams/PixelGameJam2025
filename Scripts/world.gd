@@ -27,14 +27,26 @@ func setup_game():
 	mushie = Mushie.instantiate()
 	add_child(mushie)
 	mushie.global_position = Vector2(0,0)
+	mushie.quota_reached.connect(quota_reached)
+	mushie.resume.connect(unfreeze_enemies)
 	mushie.mushie_dead.connect(freeze_enemies)
 	mushie.menu.connect(end_game)
+
+func quota_reached():
+	freeze_enemies()
+	$EnemySpawnTimer.wait_time = max(0.5, $EnemySpawnTimer.wait_time - 0.1)
 
 func freeze_enemies():
 	$EnemySpawnTimer.paused = true
 	for child in get_children():
 		if child.is_in_group("enemy") or child.is_in_group("projectile") or child.is_in_group("trees"):
 			child.set_physics_process(false)
+
+func unfreeze_enemies():
+	$EnemySpawnTimer.paused = false
+	for child in get_children():
+		if child.is_in_group("enemy") or child.is_in_group("projectile") or child.is_in_group("trees"):
+			child.set_physics_process(true)
 
 const EVEN_Q_DIRECTIONS = [
 	Vector2i(+1, 0),  # E

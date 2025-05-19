@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dtkqthu3qvgif"]
+[gd_scene load_steps=31 format=3 uid="uid://dtkqthu3qvgif"]
 
 [ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
 [ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scripts/mushie.gd" id="1_448ka"]
@@ -21,6 +21,12 @@
 [ext_resource type="Texture2D" uid="uid://budfq1t64wm5b" path="res://Assets/Mushie/MushieDeath/MushieDeath9.png" id="10_4nj6a"]
 [ext_resource type="Texture2D" uid="uid://b8wdxc3g6h8lx" path="res://Assets/Mushie/ShootinHandRelease.png" id="10_xnwgv"]
 [ext_resource type="Texture2D" uid="uid://xdmqn1m4vbvn" path="res://Assets/Mushie/MushieDeath/MushieDeath10.png" id="11_hxjlx"]
+[ext_resource type="Texture2D" uid="uid://545oaiveod7b" path="res://Assets/UI/UpgradeMenu.png" id="22_6krk0"]
+[ext_resource type="Texture2D" uid="uid://dfww3hbnw04oq" path="res://Assets/UI/UMButtonHover.png" id="23_olf0c"]
+[ext_resource type="Texture2D" uid="uid://btbq4m63kf4pu" path="res://Assets/UI/UMButton.png" id="23_onr0l"]
+[ext_resource type="Texture2D" uid="uid://b3rtfvyubjql3" path="res://Assets/UI/UMButtonClick.png" id="24_gu0dv"]
+[ext_resource type="Texture2D" uid="uid://bwlyrp5j8gik4" path="res://Assets/UI/UMButtonorange.png" id="26_pvs6e"]
+[ext_resource type="Texture2D" uid="uid://bof4iguqq7ipg" path="res://Assets/UI/SubmitButton.webp" id="27_gu0dv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5qxbh"]
 animations = [{
@@ -209,6 +215,61 @@ offset_right = 53.0
 offset_bottom = 131.0
 text = "Menu"
 
+[node name="UpgradeMenu" type="Control" parent="Control"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="UpgradeTexture" type="TextureRect" parent="Control/UpgradeMenu"]
+layout_mode = 0
+offset_left = -258.0
+offset_top = -288.5
+offset_right = 258.0
+offset_bottom = 288.5
+texture = ExtResource("22_6krk0")
+
+[node name="Option1" type="TextureButton" parent="Control/UpgradeMenu"]
+layout_mode = 0
+offset_left = -223.0
+offset_top = -116.0
+offset_right = 228.0
+offset_bottom = -15.0
+texture_normal = ExtResource("23_olf0c")
+texture_pressed = ExtResource("24_gu0dv")
+texture_hover = ExtResource("23_onr0l")
+texture_disabled = ExtResource("26_pvs6e")
+
+[node name="Option2" type="TextureButton" parent="Control/UpgradeMenu"]
+layout_mode = 0
+offset_left = -223.0
+offset_top = -18.0
+offset_right = 228.0
+offset_bottom = 83.0
+texture_normal = ExtResource("23_olf0c")
+texture_pressed = ExtResource("24_gu0dv")
+texture_hover = ExtResource("23_onr0l")
+texture_disabled = ExtResource("26_pvs6e")
+
+[node name="Option3" type="TextureButton" parent="Control/UpgradeMenu"]
+layout_mode = 0
+offset_left = -223.0
+offset_top = 80.0
+offset_right = 228.0
+offset_bottom = 181.0
+texture_normal = ExtResource("23_olf0c")
+texture_pressed = ExtResource("24_gu0dv")
+texture_hover = ExtResource("23_onr0l")
+texture_disabled = ExtResource("26_pvs6e")
+
+[node name="Submit" type="TextureButton" parent="Control/UpgradeMenu"]
+layout_mode = 0
+offset_left = 226.0
+offset_top = -57.5
+offset_right = 696.0
+offset_bottom = 57.5
+texture_normal = ExtResource("27_gu0dv")
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="AttackTimer" type="Timer" parent="."]
@@ -220,5 +281,6 @@ one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="pressed" from="Control/GameOver/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Control/UpgradeMenu/Submit" to="." method="_on_submit_pressed"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TakeDamageTimer" to="." method="_on_take_damage_timer_timeout"]

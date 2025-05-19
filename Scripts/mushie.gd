@@ -21,6 +21,7 @@ var can_shoot: bool = true
 var can_take_damage: bool = true
 
 signal quota_reached
+signal resume
 signal mushie_dead
 signal menu
 
@@ -80,17 +81,27 @@ func _handle_animation():
 func add_growth_quota(growth):
 	display_growth += growth
 	if display_growth >= quota:
-		oneoff_sound(sound_quota)
-		display_growth = 0
-		quota = next_quota
-		next_quota += 10
-		add_points(5)
-		
+		quota_reached_show_upgrades()
+	
 	$Control/Quota.text = "Quota: %d/%d" % [display_growth, quota]
+
+func quota_reached_show_upgrades():
+	set_physics_process(false)
+	emit_signal("quota_reached") #Freeze enemies, decrease enemy spawn timer
+	oneoff_sound(sound_quota)
+	display_growth = 0
+	quota = next_quota
+	next_quota += 10
+	add_points(5)
+	show_upgrade_menu()
 
 func add_points(point_add: int):
 	points += point_add
 	$Control/Points.text = "Points: %d" % points
+
+func show_upgrade_menu():
+	$Control/UpgradeMenu.visible = true
+	#TODO: upgrade buttons text and functionality
 
 func oneoff_sound(sound: AudioStream):
 	# Temporary sound object
@@ -120,6 +131,7 @@ func die():
 	set_physics_process(false)
 	emit_signal("mushie_dead")
 	$AnimatedSprite2D.play("death")
+	#TODO: add empty space to the bottom of the death sprites so mushie is in the center
 	$Control/Points.visible = false
 	$Control/Quota.visible = false
 
@@ -139,3 +151,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func _on_menu_button_pressed() -> void:
 	emit_signal("menu")
+
+func _on_submit_pressed() -> void:
+	set_physics_process(true)
+	emit_signal("resume")
+	$Control/UpgradeMenu.visible = false
