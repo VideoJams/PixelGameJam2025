@@ -10,6 +10,8 @@ var total_trees = 0
 var quota = 30
 var next_quota = 40
 @export var moveSpeed = 200.0
+
+@export var max_health = 50.0
 @export var health = 50.0
 @export var damage = 10.0
 
@@ -26,8 +28,13 @@ signal mushie_dead
 signal menu
 
 func _ready() -> void:
-	$Control/HealthBar.max_value = health
-	$Control/HealthBar.value = health
+	set_max_health(max_health)
+	
+	# hi zach :3
+	upgrade_projectile_count()
+	upgrade_attack_speed()
+	upgrade_projectile_count()
+	upgrade_attack_speed()
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
@@ -50,20 +57,32 @@ func _handle_input(delta: float):
 		inputVector = inputVector.normalized()
 	velocity = inputVector * moveSpeed
 
+	var base_direction = (get_global_mouse_position() - $HandSprite/Marker2D.global_position).normalized()
 	if can_shoot && Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		var pellet_instance = pellet_scene.instantiate()
-		pellet_instance.global_position = $HandSprite/Marker2D.global_position
-		pellet_instance.target_position = get_global_mouse_position()
-		pellet_instance.damage = damage
-		pellet_instance.move_speed = 800.0
-		pellet_instance.configure_as_player_projectile()
-		get_tree().current_scene.add_child(pellet_instance)
-		audio_player.stream = sound_shoot
-		audio_player.pitch_scale = randf_range(0.8, 1.2)
-		audio_player.play()
-		$AttackTimer.start()
-		$HandSprite.play("shoot", 3)
-		can_shoot = false
+		for i in range(projectile_count):
+			var pellet_instance = pellet_scene.instantiate()
+			pellet_instance.global_position = $HandSprite/Marker2D.global_position
+			
+			# Calculate spread for this pellet
+			if projectile_count > 1:
+				var t = i / float(projectile_count - 1)  # Normalized from 0 to 1
+				var angle_offset_degrees = (t - 0.5) * split_shot_angle
+				var angle_offset_radians = angle_offset_degrees * PI / 180.0
+				var rotated_direction = base_direction.rotated(angle_offset_radians)
+				pellet_instance.target_position = global_position + rotated_direction * 1000
+			else:
+				pellet_instance.target_position = get_global_mouse_position()
+			
+			pellet_instance.damage = damage
+			pellet_instance.move_speed = 800.0
+			pellet_instance.configure_as_player_projectile()
+			get_tree().current_scene.add_child(pellet_instance)
+			audio_player.stream = sound_shoot
+			audio_player.pitch_scale = randf_range(0.8, 1.2)
+			audio_player.play()
+			$AttackTimer.start()
+			$HandSprite.play("shoot", 3)
+			can_shoot = false
 
 func _handle_animation():
 	if can_take_damage:
@@ -156,3 +175,28 @@ func _on_submit_pressed() -> void:
 	set_physics_process(true)
 	emit_signal("resume")
 	$Control/UpgradeMenu.visible = false
+	
+# Some upgrade functionality ideas because I don't
+# know how to expand the UI lmao       -Kaydee
+
+# Upgrading max health also heals to full
+func set_max_health(new_value: float) -> void:
+	max_health = new_value
+	health = new_value
+	
+	$Control/HealthBar.max_value = new_value
+	$Control/HealthBar.value = new_value
+
+# Split shot
+var projectile_count = 1
+var split_shot_angle = 45
+func upgrade_projectile_count() -> void:
+	projectile_count += 2
+	split_shot_angle = 90 / (projectile_count - 1)
+	if split_shot_angle < 9:
+		split_shot_angle = 9
+	
+# +20% attack speed
+# 0.5 -> 0.4 -> 0.32 -> 0.256 seconds
+func upgrade_attack_speed() -> void:
+	$AttackTimer.wait_time *= 0.8

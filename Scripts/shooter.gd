@@ -1,7 +1,7 @@
 extends Enemy
 
 func attack() -> void:
-		# Number of pellets
+	# Number of pellets
 	var num_pellets = 5
 	# Spread angle in degrees (total spread)
 	var spread_angle = 30

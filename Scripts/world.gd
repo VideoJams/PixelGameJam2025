@@ -12,12 +12,17 @@ const ClumperMedium = preload("res://scenes/clumper_medium.tscn")
 const ClumperSmall = preload("res://scenes/clumper_small.tscn")
 const TreeObstacle = preload("res://scenes/tree.tscn")
 
+const MAP_MIN = -40
+const MAP_MAX = 40
 func _ready():
 	setup_game()
-	for x in range(-40, 40):
-		for y in range(-40, 40):
+	for x in range(MAP_MIN, MAP_MAX + 1):
+		for y in range(MAP_MIN, MAP_MAX + 1):
 			var coords = Vector2i(x, y)
 			tilemap.set_cell(coords, 0, Vector2i(0,0))
+			
+	randomize()
+	_init_grid()
 
 func setup_game():
 	for x in range(-40, 40):
@@ -141,7 +146,7 @@ func apply_growth_on_cell(cell: Vector2i, growth_increase: int) -> void:
 			mushie.add_points(1)
 			mushie.total_trees += 1
 		
-		var new_atlas_coords: Vector2i = Vector2i(0, new_linear_index)
+		var new_atlas_coords: Vector2i = Vector2i(atlas_coords.x, new_linear_index)
 		tilemap.set_cell(cell, source_id, new_atlas_coords)
 
 func new_enemy() -> void:
@@ -178,3 +183,60 @@ func _on_enemy_spawn_timer_timeout() -> void:
 
 func end_game():
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
+
+
+# Tile Atlas X values for different states
+var current_state = []
+var next_state = []
+
+func _init_grid():
+	var size = MAP_MAX - MAP_MIN
+	current_state.resize(size)
+	next_state.resize(size)
+	for x in range(size):
+		current_state[x] = []
+		next_state[x] = []
+		for y in range(size):
+			var state = randi() % 7  # 7 different states
+			current_state[x].append(state)
+			next_state[x].append(0)
+			
+	for i in range(50):
+		_step_automata()
+		
+	for x in range(MAP_MIN, MAP_MAX + 1):
+		for y in range(MAP_MIN, MAP_MAX + 1):
+			var cell = Vector2(x, y)
+			var source_id: int = tilemap.get_cell_source_id(cell)
+			
+			var new_atlas_coords: Vector2i = Vector2i(current_state[x][y], 0)
+			tilemap.set_cell(cell, source_id, new_atlas_coords)
+
+func _step_automata():
+	var size = MAP_MAX - MAP_MIN
+	for x in range(size):
+		for y in range(size):
+			var count = _count_neighbors(x, y)
+			# Example rule: Increase state if more than 3 neighbors
+			var state = current_state[x][y]
+			if count > 3:
+				state = (state + 1) % 4
+			next_state[x][y] = state
+	
+	# Swap current and next
+	var temp = current_state
+	current_state = next_state
+	next_state = temp
+
+func _count_neighbors(x, y):
+	var count = 0
+	for dx in range(-1, 2):
+		for dy in range(-1, 2):
+			if dx == 0 and dy == 0:
+				continue
+			var nx = x + dx
+			var ny = y + dy
+			if nx >= MAP_MIN && ny >= MAP_MIN && nx <= MAP_MAX && ny <= MAP_MAX:
+				if current_state[nx][ny] != 0:
+					count += 1  # count non-zero tiles
+	return count
