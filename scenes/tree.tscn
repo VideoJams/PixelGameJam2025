@@ -55,6 +55,7 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D" groups=["trees"]]
+y_sort_enabled = true
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ict6q")
