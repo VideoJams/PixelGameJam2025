@@ -117,6 +117,7 @@ func clumper_split(enemy_pos: Vector2, split_index: int) -> void:
 		new_enemy.global_position = Vector2(new_x, new_y)
 
 func enemy_death_growth(enemy_pos: Vector2, growth_epicenter: int) -> void:
+	mushie.enemies_killed += 1
 	var enemy_pos_to_tilemap = tilemap.to_local(enemy_pos)
 	var cell: Vector2i = tilemap.local_to_map(enemy_pos_to_tilemap)
 	apply_growth_on_cell(cell, growth_epicenter)

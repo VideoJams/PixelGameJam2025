@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3hyya3sxhw42"]
+
+[ext_resource type="Script" uid="uid://jfv1nnhutxri" path="res://Scripts/game_over.gd" id="1_14u15"]
+[ext_resource type="Texture2D" uid="uid://cctsbi1c40mms" path="res://Assets/UI/SporeSurvivorTitle3.png" id="1_ek8ke"]
+[ext_resource type="Texture2D" uid="uid://ckym02c8wuguu" path="res://Assets/UI/EndgameStats1.png" id="2_eoghk"]
+[ext_resource type="LabelSettings" uid="uid://vggp1em6q8le" path="res://TextLabel.tres" id="3_14u15"]
+[ext_resource type="LabelSettings" uid="uid://bhusoogc4rxht" path="res://NumberLabel.tres" id="5_j3ryr"]
+[ext_resource type="Script" uid="uid://c4wpqalefnidj" path="res://Scripts/title.gd" id="6_j3ryr"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_14u15")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_ek8ke")
+
+[node name="Stats" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("2_eoghk")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 113.0
+offset_right = 737.0
+offset_bottom = 155.0
+text = "Quotas Reached"
+label_settings = ExtResource("3_14u15")
+
+[node name="Label4" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 210.0
+offset_right = 737.0
+offset_bottom = 252.0
+text = "Total Points"
+label_settings = ExtResource("3_14u15")
+
+[node name="Label2" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 305.0
+offset_right = 737.0
+offset_bottom = 347.0
+text = "Trees Grown"
+label_settings = ExtResource("3_14u15")
+
+[node name="Label3" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 404.0
+offset_right = 762.0
+offset_bottom = 446.0
+text = "Enemies Defeated"
+label_settings = ExtResource("3_14u15")
+
+[node name="quotas" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 95.0
+offset_right = 492.0
+offset_bottom = 172.0
+label_settings = ExtResource("5_j3ryr")
+horizontal_alignment = 1
+
+[node name="points" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 193.0
+offset_right = 492.0
+offset_bottom = 270.0
+label_settings = ExtResource("5_j3ryr")
+horizontal_alignment = 1
+
+[node name="trees" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 289.0
+offset_right = 492.0
+offset_bottom = 366.0
+label_settings = ExtResource("5_j3ryr")
+horizontal_alignment = 1
+
+[node name="kills" type="Label" parent="Stats"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 387.0
+offset_right = 492.0
+offset_bottom = 464.0
+label_settings = ExtResource("5_j3ryr")
+horizontal_alignment = 1
+
+[node name="Title" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.137255)
+layout_mode = 0
+offset_left = 356.0
+offset_top = 476.0
+offset_right = 796.0
+offset_bottom = 559.0
+script = ExtResource("6_j3ryr")
+
+[connection signal="pressed" from="Title" to="Title" method="_on_pressed"]

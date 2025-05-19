@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dtkqthu3qvgif"]
+[gd_scene load_steps=35 format=3 uid="uid://dtkqthu3qvgif"]
 
 [ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
 [ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scripts/mushie.gd" id="1_448ka"]
@@ -22,6 +22,8 @@
 [ext_resource type="Texture2D" uid="uid://xdmqn1m4vbvn" path="res://Assets/Mushie/MushieDeath/MushieDeath10.png" id="11_hxjlx"]
 [ext_resource type="Texture2D" uid="uid://c8xeqhnuh7ake" path="res://Assets/UI/barHorizontal_green_mid 200.png" id="21_gu0dv"]
 [ext_resource type="Texture2D" uid="uid://545oaiveod7b" path="res://Assets/UI/UpgradeMenu.png" id="22_6krk0"]
+[ext_resource type="Texture2D" uid="uid://dr1rpbfly3o4m" path="res://Assets/UI/viewstats1.png" id="22_hxjlx"]
+[ext_resource type="Texture2D" uid="uid://d0aowwvwer0qe" path="res://Assets/UI/GAMEOVER1.png" id="22_jt4bw"]
 [ext_resource type="LabelSettings" uid="uid://bhusoogc4rxht" path="res://NumberLabel.tres" id="23_4nj6a"]
 [ext_resource type="Texture2D" uid="uid://dfww3hbnw04oq" path="res://Assets/UI/UMButtonHover.png" id="23_olf0c"]
 [ext_resource type="Texture2D" uid="uid://btbq4m63kf4pu" path="res://Assets/UI/UMButton.png" id="23_onr0l"]
@@ -142,9 +144,8 @@ health = 70.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_5qxbh")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.79875
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_26utk")
@@ -206,17 +207,23 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="GameOverLabel" type="Label" parent="Control/GameOver"]
+[node name="GameOverLabel" type="TextureRect" parent="Control/GameOver"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = -292.0
+offset_top = -159.0
+offset_right = 294.0
+offset_bottom = 17.0
+texture = ExtResource("22_jt4bw")
 
-[node name="MenuButton" type="Button" parent="Control/GameOver"]
+[node name="ViewStats" type="TextureButton" parent="Control/GameOver"]
 layout_mode = 0
-offset_top = 100.0
-offset_right = 53.0
-offset_bottom = 131.0
-text = "Menu"
+offset_left = -219.0
+offset_top = 37.0
+offset_right = -71.0
+offset_bottom = 106.0
+scale = Vector2(3, 3)
+texture_normal = ExtResource("22_hxjlx")
+stretch_mode = 3
 
 [node name="UpgradeMenu" type="Control" parent="Control"]
 visible = false
@@ -349,7 +356,7 @@ one_shot = true
 one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="pressed" from="Control/GameOver/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Control/GameOver/ViewStats" to="." method="_on_view_stats_pressed"]
 [connection signal="pressed" from="Control/UpgradeMenu/Submit" to="." method="_on_submit_pressed"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TakeDamageTimer" to="." method="_on_take_damage_timer_timeout"]

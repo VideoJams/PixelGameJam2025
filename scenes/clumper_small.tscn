@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://umqb4uknr0wd"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_prrsd"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_prrsd"]
 [ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="2_bfhxr"]
 [ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="3_a3xd6"]
 [ext_resource type="Texture2D" uid="uid://cbt16nn83bxkd" path="res://Assets/Enemies/Clumper/SmallClumperDeath1.png" id="4_jtvi4"]
@@ -82,3 +82,9 @@ autoplay = "walk"
 position = Vector2(4, 39)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_veqdy")
+
+[node name="HealthBar" parent="Control" index="0"]
+offset_left = -91.0
+offset_top = 75.0
+offset_right = 109.0
+offset_bottom = 101.0

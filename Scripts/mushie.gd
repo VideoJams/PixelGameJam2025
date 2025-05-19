@@ -5,10 +5,13 @@ extends CharacterBody2D
 @onready var audio_player = $AudioStreamPlayer2D
 
 var points = 0
+var total_points = 0
 var display_growth = 0
 var total_trees = 0
+var enemies_killed = 0
 var quota = 30
 var next_quota = 40
+var quotas_met = 0
 
 @export var moveSpeed = 200.0
 @export var max_health = 50.0
@@ -136,6 +139,7 @@ func add_growth_quota(growth):
 func quota_reached_show_upgrades():
 	set_physics_process(false)
 	emit_signal("quota_reached") #Freeze enemies, decrease enemy spawn timer
+	quotas_met += 1
 	oneoff_sound(sound_quota)
 	display_growth = 0
 	quota = next_quota
@@ -144,6 +148,7 @@ func quota_reached_show_upgrades():
 	show_upgrade_menu()
 
 func add_points(point_add: int):
+	total_points += point_add
 	points += point_add
 	$Control/Points.text = "Points: %d" % points
 
@@ -222,11 +227,6 @@ func _on_take_damage_timer_timeout() -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation == "death":
 		$Control/GameOver.visible = true
-		$Control/GameOver/GameOverLabel.text = "Game over!
-		You grew a total of %d trees" % total_trees
-
-func _on_menu_button_pressed() -> void:
-	emit_signal("menu")
 
 func _on_submit_pressed() -> void:
 	var buttons = [
@@ -277,3 +277,12 @@ func restore_half_hp() -> void:
 
 func restore_full_hp() -> void:
 	health = max_health
+
+func _on_view_stats_pressed() -> void:
+	var game_over_scene = preload("res://Scenes/game_over.tscn").instantiate()
+	game_over_scene.enemies_killed = enemies_killed
+	game_over_scene.total_points = total_points
+	game_over_scene.quotas_met = quotas_met
+	game_over_scene.total_trees = total_trees
+	get_tree().root.add_child(game_over_scene)
+	get_tree().current_scene.queue_free()
