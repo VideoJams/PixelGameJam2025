@@ -9,11 +9,11 @@ var display_growth = 0
 var total_trees = 0
 var quota = 30
 var next_quota = 40
-@export var moveSpeed = 200.0
 
+@export var moveSpeed = 200.0
 @export var max_health = 50.0
 @export var health = 50.0
-@export var damage = 10.0
+@export var damage = 8.0
 
 var sound_shoot = preload("res://Assets/Sounds/player_shoot.ogg")
 var sound_hurt = preload("res://Assets/Sounds/player_hurt.ogg")
@@ -27,14 +27,43 @@ signal resume
 signal mushie_dead
 signal menu
 
+const UPGRADE_OPTIONS = [
+	{
+		"name": "Half HP Restore",
+		"description": "Restore half of your hit points.",
+		"cost": 50,
+		"action": "restore_half_hp"
+	},
+	{
+		"name": "Full HP Restore",
+		"description": "Fully restore your hit points.",
+		"cost": 30,
+		"action": "restore_full_hp"
+	},
+	{
+		"name": "Increase Max HP",
+		"description": "Increase maximum HP by 10%.",
+		"cost": 15,
+		"action": "upgrade_max_hp"
+	},
+	{
+		"name": "Increase Fire Rate",
+		"description": "Slightly reduce time between firing.",
+		"cost": 15,
+		"action": "upgrade_attack_speed"
+	},
+	{
+		"name": "Fire more pellets",
+		"description": "Fire a greater number of seeds with each shot.",
+		"cost": 45,
+		"action": "upgrade_attack_count"
+	}
+]
+
 func _ready() -> void:
-	set_max_health(max_health)
-	
 	# hi zach :3
-	upgrade_projectile_count()
-	upgrade_attack_speed()
-	upgrade_projectile_count()
-	upgrade_attack_speed()
+	# XD rofl
+	pass
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
@@ -120,7 +149,35 @@ func add_points(point_add: int):
 
 func show_upgrade_menu():
 	$Control/UpgradeMenu.visible = true
-	#TODO: upgrade buttons text and functionality
+	points += 30
+	$Control/UpgradeMenu/UpgradeTexture/UpgradePoints.text = str(points)
+	
+	var upgrade_slots = [ # UI elements references
+		{ "cost_label": $Control/UpgradeMenu/Option1/UpgradeCost1,
+		  "text_label": $Control/UpgradeMenu/Option1/UpgradeText1,
+		  "button": $Control/UpgradeMenu/Option1
+		},
+		{ "cost_label": $Control/UpgradeMenu/Option2/UpgradeCost2,
+		  "text_label": $Control/UpgradeMenu/Option2/UpgradeText2,
+		  "button": $Control/UpgradeMenu/Option2
+		},
+		{ "cost_label": $Control/UpgradeMenu/Option3/UpgradeCost3,
+		  "text_label": $Control/UpgradeMenu/Option3/UpgradeText3,
+		  "button": $Control/UpgradeMenu/Option3
+		}
+	]
+	var shuffled_upgrades = UPGRADE_OPTIONS.duplicate()
+	shuffled_upgrades.shuffle()
+	
+	for i in range(upgrade_slots.size()): #setup upgrade buttons
+		var upgrade = shuffled_upgrades[i]
+		var slot = upgrade_slots[i]
+		
+		slot["cost_label"].text = str(upgrade.cost) #TODO increase this number with each round
+		slot["text_label"].text = upgrade.description
+		slot["button"].button_pressed = false
+		slot["button"].set_meta("upgrade_data", upgrade)
+		slot["button"].disabled = points < upgrade.cost
 
 func oneoff_sound(sound: AudioStream):
 	# Temporary sound object
@@ -172,31 +229,51 @@ func _on_menu_button_pressed() -> void:
 	emit_signal("menu")
 
 func _on_submit_pressed() -> void:
+	var buttons = [
+		$Control/UpgradeMenu/Option1,
+		$Control/UpgradeMenu/Option2,
+		$Control/UpgradeMenu/Option3
+	]
+	var total_cost = 0
+	var selected_upgrades = []
+	#ensure we have enough points for upgrades, else return
+	for button in buttons:
+		if button.button_pressed:
+			var upgrade = button.get_meta("upgrade_data")
+			total_cost += upgrade.cost
+			selected_upgrades.append(upgrade)
+	if total_cost > points:
+		#TODO error sound effect?
+		return
+	
+	#apply selected upgrades
+	for upgrade in selected_upgrades:
+		points -= upgrade.cost
+		call(upgrade.action)
+	
+	#resume game
 	set_physics_process(true)
 	emit_signal("resume")
 	$Control/UpgradeMenu.visible = false
-	
-# Some upgrade functionality ideas because I don't
-# know how to expand the UI lmao       -Kaydee
 
-# Upgrading max health also heals to full
-func set_max_health(new_value: float) -> void:
-	max_health = new_value
-	health = new_value
-	
-	$Control/HealthBar.max_value = new_value
-	$Control/HealthBar.value = new_value
+func upgrade_max_hp() -> void:
+	max_health += 30
+	$Control/HealthBar.max_value = max_health
 
 # Split shot
-var projectile_count = 1
+@export var projectile_count = 1
 var split_shot_angle = 45
-func upgrade_projectile_count() -> void:
-	projectile_count += 2
+func upgrade_attack_count() -> void:
+	projectile_count += 1
 	split_shot_angle = 90 / (projectile_count - 1)
 	if split_shot_angle < 9:
 		split_shot_angle = 9
-	
-# +20% attack speed
-# 0.5 -> 0.4 -> 0.32 -> 0.256 seconds
+
 func upgrade_attack_speed() -> void:
-	$AttackTimer.wait_time *= 0.8
+	$AttackTimer.wait_time *= 0.9 # +10% attack speed
+
+func restore_half_hp() -> void:
+	health = max(max_health, health + max_health/2)
+
+func restore_full_hp() -> void:
+	health = max_health

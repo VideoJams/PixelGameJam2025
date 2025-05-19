@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dtkqthu3qvgif"]
+[gd_scene load_steps=33 format=3 uid="uid://dtkqthu3qvgif"]
 
 [ext_resource type="Texture2D" uid="uid://b8a18gm02ukma" path="res://Assets/Mushie/IdleRight1.png" id="1_26utk"]
 [ext_resource type="Script" uid="uid://djenrccur4yw" path="res://Scripts/mushie.gd" id="1_448ka"]
@@ -22,8 +22,10 @@
 [ext_resource type="Texture2D" uid="uid://xdmqn1m4vbvn" path="res://Assets/Mushie/MushieDeath/MushieDeath10.png" id="11_hxjlx"]
 [ext_resource type="Texture2D" uid="uid://c8xeqhnuh7ake" path="res://Assets/UI/barHorizontal_green_mid 200.png" id="21_gu0dv"]
 [ext_resource type="Texture2D" uid="uid://545oaiveod7b" path="res://Assets/UI/UpgradeMenu.png" id="22_6krk0"]
+[ext_resource type="LabelSettings" uid="uid://bhusoogc4rxht" path="res://NumberLabel.tres" id="23_4nj6a"]
 [ext_resource type="Texture2D" uid="uid://dfww3hbnw04oq" path="res://Assets/UI/UMButtonHover.png" id="23_olf0c"]
 [ext_resource type="Texture2D" uid="uid://btbq4m63kf4pu" path="res://Assets/UI/UMButton.png" id="23_onr0l"]
+[ext_resource type="LabelSettings" uid="uid://vggp1em6q8le" path="res://TextLabel.tres" id="23_pvs6e"]
 [ext_resource type="Texture2D" uid="uid://b3rtfvyubjql3" path="res://Assets/UI/UMButtonClick.png" id="24_gu0dv"]
 [ext_resource type="Texture2D" uid="uid://bwlyrp5j8gik4" path="res://Assets/UI/UMButtonorange.png" id="26_pvs6e"]
 [ext_resource type="Texture2D" uid="uid://bof4iguqq7ipg" path="res://Assets/UI/SubmitButton.webp" id="27_gu0dv"]
@@ -230,16 +232,44 @@ offset_right = 258.0
 offset_bottom = 288.5
 texture = ExtResource("22_6krk0")
 
+[node name="UpgradePoints" type="Label" parent="Control/UpgradeMenu/UpgradeTexture"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 79.0
+offset_right = 146.0
+offset_bottom = 162.0
+label_settings = ExtResource("23_4nj6a")
+horizontal_alignment = 1
+
 [node name="Option1" type="TextureButton" parent="Control/UpgradeMenu"]
 layout_mode = 0
 offset_left = -223.0
 offset_top = -116.0
 offset_right = 228.0
 offset_bottom = -15.0
+toggle_mode = true
 texture_normal = ExtResource("23_olf0c")
 texture_pressed = ExtResource("24_gu0dv")
 texture_hover = ExtResource("23_onr0l")
 texture_disabled = ExtResource("26_pvs6e")
+
+[node name="UpgradeCost1" type="Label" parent="Control/UpgradeMenu/Option1"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 17.5
+offset_right = 85.0
+offset_bottom = 100.5
+label_settings = ExtResource("23_4nj6a")
+horizontal_alignment = 1
+
+[node name="UpgradeText1" type="Label" parent="Control/UpgradeMenu/Option1"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 8.0
+offset_right = 443.0
+offset_bottom = 95.0
+label_settings = ExtResource("23_pvs6e")
+autowrap_mode = 3
 
 [node name="Option2" type="TextureButton" parent="Control/UpgradeMenu"]
 layout_mode = 0
@@ -247,10 +277,29 @@ offset_left = -223.0
 offset_top = -18.0
 offset_right = 228.0
 offset_bottom = 83.0
+toggle_mode = true
 texture_normal = ExtResource("23_olf0c")
 texture_pressed = ExtResource("24_gu0dv")
 texture_hover = ExtResource("23_onr0l")
 texture_disabled = ExtResource("26_pvs6e")
+
+[node name="UpgradeCost2" type="Label" parent="Control/UpgradeMenu/Option2"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 17.5
+offset_right = 85.0
+offset_bottom = 100.5
+label_settings = ExtResource("23_4nj6a")
+horizontal_alignment = 1
+
+[node name="UpgradeText2" type="Label" parent="Control/UpgradeMenu/Option2"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 7.0
+offset_right = 443.0
+offset_bottom = 94.0
+label_settings = ExtResource("23_pvs6e")
+autowrap_mode = 2
 
 [node name="Option3" type="TextureButton" parent="Control/UpgradeMenu"]
 layout_mode = 0
@@ -258,10 +307,29 @@ offset_left = -223.0
 offset_top = 80.0
 offset_right = 228.0
 offset_bottom = 181.0
+toggle_mode = true
 texture_normal = ExtResource("23_olf0c")
 texture_pressed = ExtResource("24_gu0dv")
 texture_hover = ExtResource("23_onr0l")
 texture_disabled = ExtResource("26_pvs6e")
+
+[node name="UpgradeCost3" type="Label" parent="Control/UpgradeMenu/Option3"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 17.5
+offset_right = 85.0
+offset_bottom = 100.5
+label_settings = ExtResource("23_4nj6a")
+horizontal_alignment = 1
+
+[node name="UpgradeText3" type="Label" parent="Control/UpgradeMenu/Option3"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 7.0
+offset_right = 443.0
+offset_bottom = 94.0
+label_settings = ExtResource("23_pvs6e")
+autowrap_mode = 3
 
 [node name="Submit" type="TextureButton" parent="Control/UpgradeMenu"]
 layout_mode = 0
