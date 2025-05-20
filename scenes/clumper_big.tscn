@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bxaw6fk5bqyor"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_an5oa"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_an5oa"]
 [ext_resource type="Texture2D" uid="uid://dgoeixcqelw5a" path="res://Assets/Enemies/Clumper/BiggerClumperDeath1.png" id="2_k3lt4"]
 [ext_resource type="Script" uid="uid://ehambjihsknr" path="res://Scripts/clumper_big.gd" id="2_pvqoh"]
 [ext_resource type="Texture2D" uid="uid://bo3uq305rqx4h" path="res://Assets/Enemies/Clumper/BiggerClumperWalk1.png" id="2_vjg4e"]

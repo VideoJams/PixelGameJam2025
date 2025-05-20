@@ -39,7 +39,6 @@ func setup_game():
 	mushie.quota_reached.connect(quota_reached)
 	mushie.resume.connect(unfreeze_enemies)
 	mushie.mushie_dead.connect(freeze_enemies)
-	mushie.menu.connect(end_game)
 
 func quota_reached():
 	freeze_enemies()

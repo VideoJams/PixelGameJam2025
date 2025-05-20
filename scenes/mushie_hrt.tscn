@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://cch73507qexnn"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_rslk0"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_rslk0"]
 [ext_resource type="Texture2D" uid="uid://bq5plkd2jg7yw" path="res://Assets/Enemies/MushieHrt/GirlDEath1.png" id="2_2t5nx"]
 [ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="2_vthsj"]
 [ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="3_lwyt1"]
@@ -73,3 +73,9 @@ autoplay = "move"
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_rslk0")
+
+[node name="HealthBar" parent="Control" index="0"]
+offset_left = -99.0
+offset_top = 76.0
+offset_right = 101.0
+offset_bottom = 102.0

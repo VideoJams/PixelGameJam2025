@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 @onready var pellet_scene: PackedScene = preload("res://Scenes/projectile_generic.tscn")
-@onready var points_UI = $Control/Points
 @onready var audio_player = $AudioStreamPlayer2D
 
 var points = 0
@@ -12,10 +11,10 @@ var enemies_killed = 0
 var quota = 30
 var quotas_met = 0
 
-@export var moveSpeed = 200.0
-@export var max_health = 50.0
-@export var health = 50.0
-@export var damage = 8.0
+@export var moveSpeed: float
+@export var max_health: float
+@export var health: float
+@export var damage: float
 
 var sound_shoot = preload("res://Assets/Sounds/player_shoot.ogg")
 var sound_hurt = preload("res://Assets/Sounds/player_hurt.ogg")
@@ -27,7 +26,6 @@ var can_take_damage: bool = true
 signal quota_reached
 signal resume
 signal mushie_dead
-signal menu
 
 var upgrade_levels := {}
 const UPGRADE_OPTIONS = [
@@ -51,13 +49,13 @@ const UPGRADE_OPTIONS = [
 	},
 	{
 		"name": "Increase Fire Rate",
-		"description": "-20% cooldown each shot.",
+		"description": "-20% cooldown time between attacks.",
 		"cost": 4,
 		"action": "upgrade_attack_speed"
 	},
 	{
 		"name": "Fire more pellets",
-		"description": "Fire +1 of seeds each shot.",
+		"description": "Fire an additional seed with each attack.",
 		"cost": 6,
 		"action": "upgrade_attack_count"
 	},
@@ -81,16 +79,28 @@ const UPGRADE_OPTIONS = [
 	},
 ]
 
+var world_width = 39*100
+var world_height = 40*75
+
 func _ready() -> void:
 	# hi zach :3
 	# XD rofl
 	for upgrade in UPGRADE_OPTIONS:
 		upgrade_levels[upgrade.action] = 0
+	
+	#Set camera limits
+	$Camera2D.limit_left = -world_width
+	$Camera2D.limit_right = world_width
+	$Camera2D.limit_top = -world_height
+	$Camera2D.limit_bottom = world_height
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
 	_handle_animation()
 	move_and_slide()
+	# Clamp global_position to stay within the world bounds
+	global_position.x = clamp(global_position.x, -world_width, world_width)
+	global_position.y = clamp(global_position.y, -world_height, world_height)
 	
 	if can_take_damage:
 		for i in range(get_slide_collision_count()):
@@ -162,7 +172,7 @@ func quota_reached_show_upgrades():
 	quotas_met += 1
 	oneoff_sound(sound_quota)
 	display_growth = 0
-	quota = int(round(quota * 1.5))
+	quota = int(round(quota * 1.4))
 	add_points(5)
 	show_upgrade_menu()
 
@@ -198,7 +208,7 @@ func show_upgrade_menu():
 		
 		var level = upgrade_levels.get(upgrade.action, 0)
 		var dynamic_cost = int(round(upgrade.cost * pow(2, level)))
-		slot["cost_label"].text = str(dynamic_cost) #TODO increase this number with each round
+		slot["cost_label"].text = str(dynamic_cost) #TODO increase this numbwwwwer with each round
 		slot["text_label"].text = upgrade.description
 		slot["button"].button_pressed = false
 		slot["button"].set_meta("upgrade_data", upgrade)
@@ -240,7 +250,6 @@ func die():
 	set_physics_process(false)
 	emit_signal("mushie_dead")
 	$AnimatedSprite2D.play("death")
-	#TODO: add empty space to the bottom of the death sprites so mushie is in the center
 	$Control/Points.visible = false
 	$Control/Quota.visible = false
 
@@ -255,6 +264,8 @@ func _on_take_damage_timer_timeout() -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation == "death":
 		$Control/GameOver.visible = true
+		$Camera2D.enabled = true
+		$Camera2D.zoom = Vector2(0.4, 0.4)
 
 func _on_submit_pressed() -> void:
 	var buttons = [
@@ -280,6 +291,7 @@ func _on_submit_pressed() -> void:
 		points -= upgrade.cost
 		call(upgrade.data.action)
 		upgrade_levels[upgrade.data.action] += 1
+	$Control/Points.text = "Points: %d" % points
 	
 	#resume game
 	set_physics_process(true)
@@ -289,6 +301,7 @@ func _on_submit_pressed() -> void:
 func upgrade_max_hp() -> void:
 	max_health += 30
 	$Control/HealthBar.max_value = max_health
+	$Control/HealthBar.value = health
 
 # Split shot
 @export var projectile_count = 1
@@ -304,17 +317,20 @@ func upgrade_attack_count() -> void:
 			split_shot_angle = 5
 
 func upgrade_attack_speed() -> void:
-	$AttackTimer.wait_time *= 0.8
+	$AttackTimer.wait_time = max(0.1, $AttackTimer.wait_time * 0.8)
 
 func restore_half_hp() -> void:
-	health = max(max_health, health + max_health/2)
+	health = min(max_health, health + max_health/2)
+	$Control/HealthBar.value = health
 
 func restore_full_hp() -> void:
 	health = max_health
-	
+	$Control/HealthBar.max_value = max_health
+	$Control/HealthBar.value = health
+
 func upgrade_move_speed() -> void:
 	moveSpeed += 45
-	
+
 func upgrade_projectile_speed() -> void:
 	projectile_speed += 200
 
