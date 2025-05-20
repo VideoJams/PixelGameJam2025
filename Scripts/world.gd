@@ -3,6 +3,7 @@ extends Node2D
 @onready var tilemap: TileMapLayer = $TileMapLayer
 
 var mushie
+var rounds = 0
 
 const Mushie = preload("res://Scenes/mushie.tscn")
 const Shooter = preload("res://Scenes/shooter.tscn")
@@ -41,6 +42,7 @@ func setup_game():
 	mushie.mushie_dead.connect(freeze_enemies)
 
 func quota_reached():
+	rounds+=1
 	freeze_enemies()
 	$EnemySpawnTimer.wait_time = max(0.5, $EnemySpawnTimer.wait_time - 0.1)
 
@@ -182,6 +184,9 @@ func new_enemy() -> void:
 			new_enemy.set_physics_process(false)
 	else:
 		new_enemy.enemy_dead.connect(enemy_death_growth)
+	
+	# Scale difficulty
+	new_enemy.scale_difficulty(rounds)
 	
 	# Generate a location
 	var player_position = mushie.global_position

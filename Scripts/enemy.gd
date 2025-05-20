@@ -30,6 +30,13 @@ func _ready() -> void:
 	$AttackTimer.wait_time = attack_cooldown
 	$Control/HealthBar.max_value = hit_points
 
+func scale_difficulty(rounds: int):
+	attack_damage += rounds
+	hit_points += rounds*2
+	move_speed += rounds*3
+	$Control/HealthBar.max_value = hit_points
+	$Control/HealthBar.value = hit_points
+
 func _physics_process(delta: float) -> void:
 	match state:
 		State.MOVING:
@@ -97,18 +104,17 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	can_attack = true
-	
+
 func attack() -> void:
 	pass
-	
+
 func misc_death_properties() -> void:
 	pass
-	
+
 func play_sound(sound: AudioStream):
 	audio_player.stream = sound
 	audio_player.pitch_scale = randf_range(0.8, 1.2)
 	audio_player.play()
-
 
 func _on_animated_sprite_2d_frame_changed() -> void:
 	if ($AnimatedSprite2D.animation == "attack" && $AnimatedSprite2D.frame == attack_releases_on_frame):

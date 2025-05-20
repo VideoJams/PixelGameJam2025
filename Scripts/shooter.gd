@@ -1,5 +1,13 @@
 extends Enemy
 
+func scale_difficulty(rounds: int):
+	attack_damage += rounds
+	hit_points += rounds*2
+	move_speed += rounds*3
+	attack_cooldown = max(0.5, attack_cooldown-rounds*0.1)
+	$Control/HealthBar.max_value = hit_points
+	$Control/HealthBar.value = hit_points
+
 func attack() -> void:
 	# Number of pellets
 	var num_pellets = 5

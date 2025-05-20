@@ -28,7 +28,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_jo4bi")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": ExtResource("9_b4a37")
 }, {
 "duration": 1.0,
@@ -83,6 +83,7 @@ radius = 50.9117
 height = 223.446
 
 [node name="Snake" instance=ExtResource("1_l4b1q")]
+collision_mask = 4
 script = ExtResource("2_uotcb")
 hit_points = 40.0
 move_speed = 150.0
@@ -90,7 +91,7 @@ attack_damage = 10.0
 growth_on_death = 2
 attack_range = 550.0
 attack_cooldown = 4.0
-attack_releases_on_frame = 2
+attack_releases_on_frame = 3
 sound_attack_startup = ExtResource("3_fwnpn")
 sound_attack_launch = ExtResource("4_xfue1")
 sound_hurt = ExtResource("5_kc3sr")
@@ -100,6 +101,8 @@ sound_die = ExtResource("6_wk5vo")
 sprite_frames = SubResource("SpriteFrames_f07f3")
 animation = &"attack"
 autoplay = "move"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(-1, 5)
