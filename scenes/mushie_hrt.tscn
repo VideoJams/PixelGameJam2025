@@ -1,0 +1,75 @@
+[gd_scene load_steps=14 format=3 uid="uid://cch73507qexnn"]
+
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_rslk0"]
+[ext_resource type="Texture2D" uid="uid://bq5plkd2jg7yw" path="res://Assets/Enemies/MushieHrt/GirlDEath1.png" id="2_2t5nx"]
+[ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="2_vthsj"]
+[ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="3_lwyt1"]
+[ext_resource type="Texture2D" uid="uid://bupgwfbs53lf4" path="res://Assets/Enemies/MushieHrt/GirlDEath2.png" id="3_vthsj"]
+[ext_resource type="Texture2D" uid="uid://duak8ppk5ywxe" path="res://Assets/Enemies/MushieHrt/GirlDEath3.png" id="4_lwyt1"]
+[ext_resource type="Texture2D" uid="uid://bl62tjn3ayxj4" path="res://Assets/Enemies/MushieHrt/GirlDEath4.png" id="5_djg5q"]
+[ext_resource type="Texture2D" uid="uid://bl5w64ifgcb50" path="res://Assets/Enemies/MushieHrt/GirlDEath5.png" id="6_xybgh"]
+[ext_resource type="Texture2D" uid="uid://dcub18rgv24fh" path="res://Assets/Enemies/MushieHrt/GirlDamaged.png" id="7_xuen1"]
+[ext_resource type="Texture2D" uid="uid://cgetdh8t4jrvn" path="res://Assets/Enemies/MushieHrt/GirlWalk1.png" id="8_3ico2"]
+[ext_resource type="Texture2D" uid="uid://qdewlw34482f" path="res://Assets/Enemies/MushieHrt/GirlWalk2.png" id="9_ljkyx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ik8gr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2t5nx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vthsj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lwyt1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_djg5q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_xybgh")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_3ico2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ljkyx")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_xuen1")
+}],
+"loop": true,
+"name": &"take_damage",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rslk0"]
+radius = 89.822
+
+[node name="MushieHrt" instance=ExtResource("1_rslk0")]
+collision_mask = 4
+hit_points = 20.0
+move_speed = 400.0
+attack_damage = 10.0
+growth_on_death = 2
+sound_hurt = ExtResource("2_vthsj")
+sound_die = ExtResource("3_lwyt1")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_ik8gr")
+animation = &"move"
+autoplay = "move"
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_rslk0")

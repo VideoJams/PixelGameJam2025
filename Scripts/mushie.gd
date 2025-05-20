@@ -10,7 +10,6 @@ var display_growth = 0
 var total_trees = 0
 var enemies_killed = 0
 var quota = 30
-var next_quota = 40
 var quotas_met = 0
 
 @export var moveSpeed = 200.0
@@ -30,43 +29,63 @@ signal resume
 signal mushie_dead
 signal menu
 
+var upgrade_levels := {}
 const UPGRADE_OPTIONS = [
 	{
 		"name": "Half HP Restore",
 		"description": "Restore half of your hit points.",
-		"cost": 50,
+		"cost": 1,
 		"action": "restore_half_hp"
 	},
 	{
 		"name": "Full HP Restore",
 		"description": "Fully restore your hit points.",
-		"cost": 30,
+		"cost": 3,
 		"action": "restore_full_hp"
 	},
 	{
 		"name": "Increase Max HP",
 		"description": "Increase maximum HP by 10%.",
-		"cost": 15,
+		"cost": 5,
 		"action": "upgrade_max_hp"
 	},
 	{
 		"name": "Increase Fire Rate",
-		"description": "Slightly reduce time between firing.",
-		"cost": 15,
+		"description": "-20% cooldown each shot.",
+		"cost": 4,
 		"action": "upgrade_attack_speed"
 	},
 	{
 		"name": "Fire more pellets",
-		"description": "Fire a greater number of seeds with each shot.",
-		"cost": 45,
+		"description": "Fire +1 of seeds each shot.",
+		"cost": 6,
 		"action": "upgrade_attack_count"
-	}
+	},
+	{
+		"name": "Increase Move Speed",
+		"description": "Move +15% faster.",
+		"cost": 5,
+		"action": "upgrade_move_speed"
+	},
+	{
+		"name": "Increase Pellet Speed",
+		"description": "Seeds travel +25% faster.",
+		"cost": 3,
+		"action": "upgrade_projectile_speed"
+	},
+	{
+		"name": "Increase Projectile Damage",
+		"description": "Seeds deal +20% damage.",
+		"cost": 5,
+		"action": "upgrade_projectile_damage"
+	},
 ]
 
 func _ready() -> void:
 	# hi zach :3
 	# XD rofl
-	pass
+	for upgrade in UPGRADE_OPTIONS:
+		upgrade_levels[upgrade.action] = 0
 
 func _physics_process(delta: float) -> void:
 	_handle_input(delta)
@@ -81,6 +100,7 @@ func _physics_process(delta: float) -> void:
 				if (collider.collision_layer & (1 << 1)) != 0:
 					take_damage(10)
 
+var projectile_speed = 800
 func _handle_input(delta: float):
 	var inputVector = Vector2.ZERO
 	inputVector.x = Input.get_axis("left", "right")
@@ -106,7 +126,7 @@ func _handle_input(delta: float):
 				pellet_instance.target_position = get_global_mouse_position()
 			
 			pellet_instance.damage = damage
-			pellet_instance.move_speed = 800.0
+			pellet_instance.move_speed = projectile_speed
 			pellet_instance.configure_as_player_projectile()
 			get_tree().current_scene.add_child(pellet_instance)
 			audio_player.stream = sound_shoot
@@ -142,8 +162,7 @@ func quota_reached_show_upgrades():
 	quotas_met += 1
 	oneoff_sound(sound_quota)
 	display_growth = 0
-	quota = next_quota
-	next_quota += 10
+	quota = int(round(quota * 1.5))
 	add_points(5)
 	show_upgrade_menu()
 
@@ -154,7 +173,6 @@ func add_points(point_add: int):
 
 func show_upgrade_menu():
 	$Control/UpgradeMenu.visible = true
-	points += 30
 	$Control/UpgradeMenu/UpgradeTexture/UpgradePoints.text = str(points)
 	
 	var upgrade_slots = [ # UI elements references
@@ -178,11 +196,21 @@ func show_upgrade_menu():
 		var upgrade = shuffled_upgrades[i]
 		var slot = upgrade_slots[i]
 		
-		slot["cost_label"].text = str(upgrade.cost) #TODO increase this number with each round
+		var level = upgrade_levels.get(upgrade.action, 0)
+		var dynamic_cost = int(round(upgrade.cost * pow(2, level)))
+		slot["cost_label"].text = str(dynamic_cost) #TODO increase this number with each round
 		slot["text_label"].text = upgrade.description
 		slot["button"].button_pressed = false
 		slot["button"].set_meta("upgrade_data", upgrade)
+		slot["button"].set_meta("dynamic_cost", dynamic_cost)
 		slot["button"].disabled = points < upgrade.cost
+		
+		# var level = upgrade_levels.get(upgrade.action, 0)
+		# var dynamic_cost = upgrade.cost * pow(2, level)
+		# slot["cost_label"].text = str(dynamic_cost)
+		# slot["button"].set_meta("upgrade_data", upgrade)
+		# slot["button"].set_meta("dynamic_cost", dynamic_cost)
+		# slot["button"].disabled = points < dynamic_cost
 
 func oneoff_sound(sound: AudioStream):
 	# Temporary sound object
@@ -240,8 +268,9 @@ func _on_submit_pressed() -> void:
 	for button in buttons:
 		if button.button_pressed:
 			var upgrade = button.get_meta("upgrade_data")
-			total_cost += upgrade.cost
-			selected_upgrades.append(upgrade)
+			var cost = button.get_meta("dynamic_cost")
+			total_cost += cost
+			selected_upgrades.append({ "data": upgrade, "cost": cost })
 	if total_cost > points:
 		#TODO error sound effect?
 		return
@@ -249,7 +278,8 @@ func _on_submit_pressed() -> void:
 	#apply selected upgrades
 	for upgrade in selected_upgrades:
 		points -= upgrade.cost
-		call(upgrade.action)
+		call(upgrade.data.action)
+		upgrade_levels[upgrade.data.action] += 1
 	
 	#resume game
 	set_physics_process(true)
@@ -265,18 +295,31 @@ func upgrade_max_hp() -> void:
 var split_shot_angle = 45
 func upgrade_attack_count() -> void:
 	projectile_count += 1
-	split_shot_angle = 90 / (projectile_count - 1)
-	if split_shot_angle < 9:
-		split_shot_angle = 9
+	
+	if projectile_count == 2:
+		split_shot_angle = 15
+	else:
+		split_shot_angle = 60 - (projectile_count * 5)
+		if split_shot_angle < 5:
+			split_shot_angle = 5
 
 func upgrade_attack_speed() -> void:
-	$AttackTimer.wait_time *= 0.9 # +10% attack speed
+	$AttackTimer.wait_time *= 0.8
 
 func restore_half_hp() -> void:
 	health = max(max_health, health + max_health/2)
 
 func restore_full_hp() -> void:
 	health = max_health
+	
+func upgrade_move_speed() -> void:
+	moveSpeed += 45
+	
+func upgrade_projectile_speed() -> void:
+	projectile_speed += 200
+
+func upgrade_projectile_damage() -> void:
+	damage += 2
 
 func _on_view_stats_pressed() -> void:
 	var game_over_scene = preload("res://Scenes/game_over.tscn").instantiate()

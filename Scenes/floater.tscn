@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://wt4yof7mqoyk"]
 
-[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://Scenes/enemy.tscn" id="1_7658v"]
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_7658v"]
 [ext_resource type="Script" uid="uid://dld2tlivxdduc" path="res://Scripts/floater.gd" id="2_qt4hv"]
 [ext_resource type="Texture2D" uid="uid://43r13oyv6jse" path="res://Assets/Enemies/Floater/FloatyDeath1.png" id="3_beytw"]
 [ext_resource type="Texture2D" uid="uid://cd8qydee2tj6k" path="res://Assets/Enemies/Floater/FloatyCharge1.png" id="3_kkf7u"]
@@ -87,6 +87,7 @@ radius = 55.0
 height = 140.0
 
 [node name="Floater" instance=ExtResource("1_7658v")]
+collision_mask = 4
 script = ExtResource("2_qt4hv")
 hit_points = 30.0
 move_speed = 200.0

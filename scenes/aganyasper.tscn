@@ -1,0 +1,81 @@
+[gd_scene load_steps=16 format=3 uid="uid://cn1hsn07kl51v"]
+
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_1rcjb"]
+[ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="2_x7gja"]
+[ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="3_sdqud"]
+[ext_resource type="Texture2D" uid="uid://dsupio2ryl68y" path="res://Assets/Enemies/Aganya/AganyaDamaged.png" id="4_bqhnn"]
+[ext_resource type="Texture2D" uid="uid://dgquitmcpcahy" path="res://Assets/Enemies/Aganya/AganyaWalk1.png" id="4_j0qpo"]
+[ext_resource type="Texture2D" uid="uid://b4c6wr6rcw2o7" path="res://Assets/Enemies/Aganya/AganyaDeath1.png" id="4_tj2me"]
+[ext_resource type="Texture2D" uid="uid://bsssmhc60d2bi" path="res://Assets/Enemies/Aganya/AganyaWalk2.png" id="5_bqhnn"]
+[ext_resource type="Texture2D" uid="uid://cawd8p41rs545" path="res://Assets/Enemies/Aganya/AganyaDeath2.png" id="5_nom7k"]
+[ext_resource type="Texture2D" uid="uid://bsr32m4xbmh46" path="res://Assets/Enemies/Aganya/AganyaWalk3.png" id="6_6au21"]
+[ext_resource type="Texture2D" uid="uid://c8x8buyj63ygx" path="res://Assets/Enemies/Aganya/AganyaDeath3.png" id="6_rfv7h"]
+[ext_resource type="Texture2D" uid="uid://dwu8pbuwx82cy" path="res://Assets/Enemies/Aganya/AganyaWalk4.png" id="7_fu3cc"]
+[ext_resource type="Texture2D" uid="uid://bm6m25rl86o3p" path="res://Assets/Enemies/Aganya/AganyaDeath4.png" id="7_hcuoy"]
+[ext_resource type="Texture2D" uid="uid://cjhagg28prmns" path="res://Assets/Enemies/Aganya/AganyaDeath5.png" id="8_3cjw0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m3akf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_tj2me")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nom7k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rfv7h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hcuoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3cjw0")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_j0qpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bqhnn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6au21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_fu3cc")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_bqhnn")
+}],
+"loop": true,
+"name": &"take_damage",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tj2me"]
+radius = 98.7168
+
+[node name="Aganyasper" instance=ExtResource("1_1rcjb")]
+hit_points = 80.0
+move_speed = 100.0
+growth_on_death = 2
+sound_hurt = ExtResource("2_x7gja")
+sound_die = ExtResource("3_sdqud")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_m3akf")
+animation = &"move"
+autoplay = "move"
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_tj2me")

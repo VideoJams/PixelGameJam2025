@@ -1,0 +1,110 @@
+[gd_scene load_steps=21 format=3 uid="uid://cmb1vbsfk0eqj"]
+
+[ext_resource type="PackedScene" uid="uid://er64geh448yl" path="res://scenes/enemy.tscn" id="1_l4b1q"]
+[ext_resource type="Texture2D" uid="uid://hs0r0vqgxa25" path="res://Assets/Enemies/Snake/SnakeWalk1.png" id="2_4j5f3"]
+[ext_resource type="Script" uid="uid://cf3m50ya2s7j4" path="res://Scripts/snake.gd" id="2_uotcb"]
+[ext_resource type="Texture2D" uid="uid://bdjrttwvtuy8e" path="res://Assets/Enemies/Snake/SnakeWalk2.png" id="3_1p8c4"]
+[ext_resource type="AudioStream" uid="uid://ca0gu0qc7q4v8" path="res://Assets/Sounds/snake_charge.ogg" id="3_fwnpn"]
+[ext_resource type="Texture2D" uid="uid://cc2mh456g2efs" path="res://Assets/Enemies/Snake/SnakeDeath1.png" id="4_10gix"]
+[ext_resource type="Texture2D" uid="uid://ddkxbks5usgr4" path="res://Assets/Enemies/Snake/SnakeDamaged.png" id="4_oj63r"]
+[ext_resource type="AudioStream" uid="uid://bhmt81ntgf3hr" path="res://Assets/Sounds/snake_shoot.ogg" id="4_xfue1"]
+[ext_resource type="AudioStream" uid="uid://wryc23mol1xt" path="res://Assets/Sounds/enemy_hit.ogg" id="5_kc3sr"]
+[ext_resource type="Texture2D" uid="uid://do7vcfk42agvb" path="res://Assets/Enemies/Snake/SnakeDeath2.png" id="5_uotcb"]
+[ext_resource type="Texture2D" uid="uid://dmnc1yn8wmjed" path="res://Assets/Enemies/Snake/SnakeDeath3.png" id="6_21w4a"]
+[ext_resource type="AudioStream" uid="uid://bven5mxbwinmh" path="res://Assets/Sounds/enemy_die.ogg" id="6_wk5vo"]
+[ext_resource type="Texture2D" uid="uid://bw8ne60na52bo" path="res://Assets/Enemies/Snake/SnakeDeath4.png" id="7_l1qxe"]
+[ext_resource type="Texture2D" uid="uid://bnxwll02svbi3" path="res://Assets/Enemies/Snake/SnakeArrack1.png" id="7_nir8i"]
+[ext_resource type="Texture2D" uid="uid://pcyj83ogb0km" path="res://Assets/Enemies/Snake/SnakeArrack2.png" id="8_jo4bi"]
+[ext_resource type="Texture2D" uid="uid://bcax1ml1u2o72" path="res://Assets/Enemies/Snake/SnakeDeath5.png" id="8_px58k"]
+[ext_resource type="Texture2D" uid="uid://ct3ecdhuqb2nx" path="res://Assets/Enemies/Snake/SnakeArrack3.png" id="9_b4a37"]
+[ext_resource type="Texture2D" uid="uid://d1fsv0bel6yrl" path="res://Assets/Enemies/Snake/SnakeArrack4.png" id="10_soagx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f07f3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_nir8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jo4bi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b4a37")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_soagx")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_10gix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uotcb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_21w4a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_l1qxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_px58k")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4j5f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1p8c4")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_oj63r")
+}],
+"loop": true,
+"name": &"take_damage",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_10gix"]
+radius = 50.9117
+height = 223.446
+
+[node name="Snake" instance=ExtResource("1_l4b1q")]
+script = ExtResource("2_uotcb")
+hit_points = 40.0
+move_speed = 150.0
+attack_damage = 10.0
+growth_on_death = 2
+attack_range = 550.0
+attack_cooldown = 4.0
+attack_releases_on_frame = 2
+sound_attack_startup = ExtResource("3_fwnpn")
+sound_attack_launch = ExtResource("4_xfue1")
+sound_hurt = ExtResource("5_kc3sr")
+sound_die = ExtResource("6_wk5vo")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_f07f3")
+animation = &"attack"
+autoplay = "move"
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-1, 5)
+rotation = 0.785398
+shape = SubResource("CapsuleShape2D_10gix")
+
+[node name="AttackTimer" parent="." index="2"]
+wait_time = 4.0

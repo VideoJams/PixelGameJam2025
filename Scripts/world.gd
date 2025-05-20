@@ -10,6 +10,10 @@ const Floater = preload("res://Scenes/floater.tscn")
 const ClumperBig = preload("res://Scenes/clumper_big.tscn")
 const ClumperMedium = preload("res://Scenes/clumper_medium.tscn")
 const ClumperSmall = preload("res://Scenes/clumper_small.tscn")
+const MushieHrt = preload("res://Scenes/mushie_hrt.tscn")
+const Snake = preload("res://Scenes/snake.tscn")
+const Aganyasper = preload("res://Scenes/aganyasper.tscn")
+
 const TreeObstacle = preload("res://Scenes/tree.tscn")
 
 const MAP_MIN = -40
@@ -158,11 +162,17 @@ func new_enemy() -> void:
 	var new_enemy
 	var enemy_choice = randf()
 	var is_clumper = false
-	if (enemy_choice >= 0.8):
+	if (enemy_choice >= 0.85):
 		new_enemy = Shooter.instantiate()
-	elif (enemy_choice >= 0.5):
+	elif (enemy_choice >= 0.7):
 		new_enemy = ClumperBig.instantiate()
 		is_clumper = true
+	elif (enemy_choice >= 0.55):
+		new_enemy = Aganyasper.instantiate()
+	elif (enemy_choice >= 0.4):
+		new_enemy = MushieHrt.instantiate()
+	elif (enemy_choice >= 0.25):
+		new_enemy = Snake.instantiate()
 	else:
 		new_enemy = Floater.instantiate() 
 	new_enemy.player = mushie
